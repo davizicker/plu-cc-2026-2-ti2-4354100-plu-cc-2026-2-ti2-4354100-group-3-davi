@@ -8,8 +8,8 @@ export const projects: Project[] = [
     year: 2023,
     name: "ADACCT — checagem de contas do Active Directory",
     description: {
-      pt: "Ferramenta em Python que confere e-mails e hashes de senha das contas do Active Directory no banco do HaveIBeenPwned, para descobrir quais usuários tiveram dados vazados. Criei com minha outra conta do GitHub (I506dk) e mantenho este espelho no meu perfil principal.",
-      en: "Python tool that checks Active Directory account emails and password hashes against HaveIBeenPwned to find which users have exposed data. I built it under my other GitHub account (I506dk) and keep this mirror on my main profile.",
+      pt: "Ferramenta em Python que confere e-mails e hashes de senha das contas do Active Directory no banco do HaveIBeenPwned, para descobrir quais usuários tiveram dados vazados.",
+      en: "Python tool that checks Active Directory account emails and password hashes against HaveIBeenPwned to find which users have exposed data.",
     },
     highlights: [
       { pt: "Lê os e-mails dos usuários direto do Active Directory", en: "Reads user emails straight from Active Directory" },
