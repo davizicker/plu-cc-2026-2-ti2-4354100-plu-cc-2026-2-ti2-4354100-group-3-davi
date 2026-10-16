@@ -26,6 +26,8 @@ export const pt = {
     educationTitle: "Minha trajetória",
     skillsTitle: "O que sei fazer",
     groups: { dev: "Tecnologia", office: "Escritório", design: "Criação" },
+    hobbiesTitle: "Fora do computador",
+    hobbies: ["🎸 Guitarra", "🎮 Jogos eletrônicos", "🎵 Música", "💻 Programar por diversão"],
     competencies: "Competências",
     competenciesList: [
       "Organização de documentos, informações e controles internos",
@@ -49,6 +51,7 @@ export const pt = {
     subtitle: "Do mais antigo ao mais recente — role para acompanhar a linha do tempo.",
     all: "Todos",
     repo: "Ver no GitHub",
+    privateRepo: "Repositório privado — peça acesso pelo contato",
     live: "Ver online",
     details: "Ver detalhes",
     close: "Fechar",

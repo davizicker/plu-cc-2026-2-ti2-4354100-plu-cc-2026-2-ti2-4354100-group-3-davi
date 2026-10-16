@@ -4,6 +4,18 @@ import type { Project } from "@/types";
 // copie um bloco, coloque o print em public/projects/ e ajuste os campos.
 export const projects: Project[] = [
   {
+    id: "av1-diw",
+    year: 2026,
+    name: "AV1 — Página de perfil (DIW)",
+    description: {
+      pt: "Primeira avaliação de Desenvolvimento de Interfaces Web na PUC Minas: uma página de perfil em HTML e CSS puros, com cabeçalho, foto, lista de hobbies, link externo e rodapé.",
+      en: "First Web Interface Development assessment at PUC Minas: a profile page in plain HTML and CSS with header, photo, hobby list, external link and footer.",
+    },
+    technologies: ["HTML", "CSS"],
+    repoUrl: "https://github.com/davizicker/AV1-DIW",
+    media: "/projects/av1-diw.png",
+  },
+  {
     id: "lacuna",
     year: 2026,
     name: "Lacuna — startup de diagnóstico e matching",
@@ -18,6 +30,7 @@ export const projects: Project[] = [
     ],
     technologies: ["HTML", "CSS", "JavaScript"],
     repoUrl: "https://github.com/davizicker/STARTUP",
+    private: true,
     media: "/projects/lacuna.png",
   },
   {
@@ -36,6 +49,7 @@ export const projects: Project[] = [
     ],
     technologies: ["JavaScript", "Supabase", "PostgreSQL", "Edge Functions", "HTML", "CSS"],
     repoUrl: "https://github.com/davizicker/jerf",
+    private: true,
     extraLinks: [{ label: "Painel (versão mais recente)", url: "https://github.com/nte2coord-dev/PAINEL-METROPOLITANA" }],
     media: "/projects/portal-sre.png",
   },

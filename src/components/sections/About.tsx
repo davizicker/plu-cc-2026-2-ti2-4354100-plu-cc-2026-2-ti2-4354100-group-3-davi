@@ -46,6 +46,11 @@ export function About() {
             </Reveal>
 
             <Reveal>
+              <h3 className="mb-3 font-display text-lg font-bold text-brand">{a.hobbiesTitle}</h3>
+              <div className="flex flex-wrap gap-2">{a.hobbies.map((h) => <span key={h} className="chip bg-surface text-sm transition hover:-translate-y-0.5 hover:border-accent">{h}</span>)}</div>
+            </Reveal>
+
+            <Reveal>
               <h3 className="mb-3 font-display text-lg font-bold text-brand">{a.competencies}</h3>
               <ul className="space-y-2">
                 {a.competenciesList.map((c) => (

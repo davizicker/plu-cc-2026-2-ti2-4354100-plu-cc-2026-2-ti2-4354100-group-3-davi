@@ -28,6 +28,8 @@ export const en: Dict = {
     educationTitle: "My journey",
     skillsTitle: "What I can do",
     groups: { dev: "Tech", office: "Office", design: "Creative" },
+    hobbiesTitle: "Away from the keyboard",
+    hobbies: ["🎸 Guitar", "🎮 Video games", "🎵 Music", "💻 Coding for fun"],
     competencies: "Strengths",
     competenciesList: [
       "Organizing documents, information and internal controls",
@@ -51,6 +53,7 @@ export const en: Dict = {
     subtitle: "Oldest to newest — scroll to follow the timeline.",
     all: "All",
     repo: "View on GitHub",
+    privateRepo: "Private repository — ask for access via contact",
     live: "View live",
     details: "See details",
     close: "Close",

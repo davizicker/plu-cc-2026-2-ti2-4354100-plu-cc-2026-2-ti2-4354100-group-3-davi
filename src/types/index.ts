@@ -8,6 +8,8 @@ export interface Project {
   description: Bi;
   technologies: string[];
   repoUrl: string;
+  /** repositório privado: não mostra link do GitHub */
+  private?: boolean;
   liveUrl?: string;
   extraLinks?: { label: string; url: string }[];
   highlights?: Bi[];

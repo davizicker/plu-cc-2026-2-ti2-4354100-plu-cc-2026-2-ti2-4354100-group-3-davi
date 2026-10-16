@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
-import { Check, ExternalLink, X } from "lucide-react";
+import { Check, ExternalLink, Lock, X } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 import { useLang } from "@/context/LanguageContext";
 import { projects } from "@/data/projects";
@@ -65,7 +65,9 @@ export function Projects() {
                       <h3 className="mt-1 font-display text-xl font-bold text-brand">{proj.name}</h3>
                       <p className="mt-2 text-sm leading-relaxed text-muted">{proj.description[lang]}</p>
                       <div className="mt-4 flex flex-wrap gap-1.5">{proj.technologies.map((x) => <span key={x} className="chip">{x}</span>)}</div>
-                      <a href={proj.repoUrl} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-brand2 hover:underline dark:text-accent"><FaGithub /> {p.repo}</a>
+                      {proj.private
+                        ? <p className="mt-5 inline-flex items-center gap-2 text-sm text-muted"><Lock size={14} /> {p.privateRepo}</p>
+                        : <a href={proj.repoUrl} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-brand2 hover:underline dark:text-accent"><FaGithub /> {p.repo}</a>}
                     </div>
                   </article>
                 </motion.li>
@@ -95,7 +97,9 @@ export function Projects() {
                 <h4 className="mb-2 mt-5 text-sm font-bold">{p.tech}</h4>
                 <div className="flex flex-wrap gap-1.5">{open.technologies.map((x) => <span key={x} className="chip">{x}</span>)}</div>
                 <div className="mt-6 flex flex-wrap gap-3">
-                  <a href={open.repoUrl} target="_blank" rel="noopener noreferrer" className="btn-primary"><FaGithub /> {p.repo}</a>
+                  {open.private
+                    ? <span className="btn-ghost cursor-default"><Lock size={15} /> {p.privateRepo}</span>
+                    : <a href={open.repoUrl} target="_blank" rel="noopener noreferrer" className="btn-primary"><FaGithub /> {p.repo}</a>}
                   {open.extraLinks?.map((l) => <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer" className="btn-ghost"><FaGithub /> {l.label}</a>)}
                   {open.liveUrl && <a href={open.liveUrl} target="_blank" rel="noopener noreferrer" className="btn-ghost"><ExternalLink size={16} /> {p.live}</a>}
                 </div>
