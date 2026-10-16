@@ -30,28 +30,28 @@ export function About() {
             </AnimatePresence>
 
             <Reveal>
-              <div className="card flex gap-4 border-l-4 border-l-accent p-6">
+              <div className="card hud flex gap-4 border-l-4 border-l-accent p-6">
                 <Target className="mt-1 shrink-0 text-accent" />
-                <div><h3 className="font-display text-lg font-bold text-brand">{a.goalTitle}</h3><p className="mt-1 text-muted">{a.goal}</p></div>
+                <div><h3 className="font-display text-lg font-bold text-ink">{a.goalTitle}</h3><p className="mt-1 text-muted">{a.goal}</p></div>
               </div>
             </Reveal>
 
             <Reveal className="grid grid-cols-3 gap-3">
               {a.facts.map((f) => (
-                <TiltCard key={f.l} className="card p-4 text-center">
-                  <div className="font-display text-4xl font-bold text-brand2 dark:text-accent">{f.v}</div>
+                <TiltCard key={f.l} className="card hud p-4 text-center">
+                  <div className="font-display text-4xl font-bold text-accent">{f.v}</div>
                   <div className="mt-1 text-xs text-muted">{f.l}</div>
                 </TiltCard>
               ))}
             </Reveal>
 
             <Reveal>
-              <h3 className="mb-3 font-display text-lg font-bold text-brand">{a.hobbiesTitle}</h3>
+              <h3 className="mb-3 font-display text-lg font-bold text-ink">{a.hobbiesTitle}</h3>
               <div className="flex flex-wrap gap-2">{a.hobbies.map((h) => <span key={h} className="chip bg-surface text-sm transition hover:-translate-y-0.5 hover:border-accent">{h}</span>)}</div>
             </Reveal>
 
             <Reveal>
-              <h3 className="mb-3 font-display text-lg font-bold text-brand">{a.competencies}</h3>
+              <h3 className="mb-3 font-display text-lg font-bold text-ink">{a.competencies}</h3>
               <ul className="space-y-2">
                 {a.competenciesList.map((c) => (
                   <li key={c} className="flex gap-3 text-muted"><Check size={18} className="mt-0.5 shrink-0 text-accent" />{c}</li>
@@ -61,8 +61,8 @@ export function About() {
           </div>
 
           <div className="space-y-6">
-            <Reveal className="card p-6">
-              <h3 className="mb-5 flex items-center gap-2 font-display text-lg font-bold text-brand"><GraduationCap size={20} className="text-accent" />{a.educationTitle}</h3>
+            <Reveal className="card hud p-6">
+              <h3 className="mb-5 flex items-center gap-2 font-display text-lg font-bold text-ink"><GraduationCap size={20} className="text-accent" />{a.educationTitle}</h3>
               <ol className="relative space-y-5 border-l-2 border-line pl-6">
                 {education.map((e) => (
                   <li key={e.title + e.year} className="relative">
@@ -75,12 +75,12 @@ export function About() {
               </ol>
             </Reveal>
 
-            <Reveal className="card p-6">
-              <h3 className="mb-4 font-display text-lg font-bold text-brand">{a.skillsTitle}</h3>
+            <Reveal className="card hud p-6">
+              <h3 className="mb-4 font-display text-lg font-bold text-ink">{a.skillsTitle}</h3>
               <div className="mb-5 flex flex-wrap gap-2" role="tablist">
                 {groups.map((g) => (
                   <button key={g} role="tab" aria-selected={group === g} onClick={() => setGroup(g)}
-                    className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${group === g ? "bg-brand text-bg dark:bg-accent dark:text-[#04101f]" : "border border-line text-muted hover:border-brand2"}`}>
+                    className={`rounded-md px-4 py-1.5 text-sm font-medium transition ${group === g ? "bg-accent text-[#0c0d10]" : "border border-line text-muted hover:border-brand2"}`}>
                     {a.groups[g]}
                   </button>
                 ))}
@@ -90,8 +90,8 @@ export function About() {
               </div>
             </Reveal>
 
-            <Reveal className="card p-6">
-              <h3 className="mb-4 font-display text-lg font-bold text-brand">{a.languagesTitle}</h3>
+            <Reveal className="card hud p-6">
+              <h3 className="mb-4 font-display text-lg font-bold text-ink">{a.languagesTitle}</h3>
               <div className="space-y-4">
                 {a.languages.map((l, i) => (
                   <div key={l.n}>
@@ -105,7 +105,7 @@ export function About() {
         </div>
 
         <Reveal className="mt-10">
-          <h3 className="mb-3 font-display text-lg font-bold text-brand">{a.courses}</h3>
+          <h3 className="mb-3 font-display text-lg font-bold text-ink">{a.courses}</h3>
           <div className="flex flex-wrap gap-2">{a.coursesList.map((c) => <span key={c} className="chip transition hover:-translate-y-0.5 hover:border-accent">{c}</span>)}</div>
         </Reveal>
       </div>

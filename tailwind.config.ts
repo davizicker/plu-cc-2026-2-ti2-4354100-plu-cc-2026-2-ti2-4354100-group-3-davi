@@ -19,6 +19,7 @@ const config: Config = {
       fontFamily: {
         display: ["'Space Grotesk Variable'", "system-ui", "sans-serif"],
         sans: ["'Inter Variable'", "system-ui", "sans-serif"],
+        mono: ["'JetBrains Mono Variable'", "ui-monospace", "monospace"],
       },
       keyframes: {
         float: { "0%,100%": { transform: "translateY(0)" }, "50%": { transform: "translateY(-10px)" } },

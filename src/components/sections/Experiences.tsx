@@ -1,13 +1,13 @@
 "use client";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Briefcase, CalendarDays, Calendar, GraduationCap, GitBranch, Laptop, ChevronDown } from "lucide-react";
+import { Briefcase, CalendarDays, Calendar, GraduationCap, GitBranch, Laptop, ChevronDown, Gamepad2 } from "lucide-react";
 import { useLang } from "@/context/LanguageContext";
 import { experiences } from "@/data/experiences";
 import type { ExperienceType } from "@/types";
 import { SectionTitle } from "@/components/shared/SectionTitle";
 
-const icons: Record<ExperienceType, typeof Briefcase> = { academico: GraduationCap, estagio: Briefcase, freela: Laptop, opensource: GitBranch, evento: CalendarDays };
+const icons: Record<ExperienceType, typeof Briefcase> = { academico: GraduationCap, estagio: Briefcase, freela: Laptop, opensource: GitBranch, evento: CalendarDays, criador: Gamepad2 };
 
 export function Experiences() {
   const { t, lang } = useLang();
@@ -24,7 +24,7 @@ export function Experiences() {
         <div className="mb-10 flex flex-wrap gap-2">
           {(["all", ...types] as const).map((x) => (
             <button key={x} onClick={() => setFilter(x)} aria-pressed={filter === x}
-              className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${filter === x ? "bg-brand text-bg dark:bg-accent dark:text-[#04101f]" : "border border-line bg-surface text-muted hover:border-brand2"}`}>
+              className={`rounded-md px-4 py-1.5 text-sm font-medium transition ${filter === x ? "bg-accent text-[#0c0d10]" : "border border-line bg-surface text-muted hover:border-brand2"}`}>
               {x === "all" ? e.all : e.types[x]}
             </button>
           ))}
@@ -36,16 +36,16 @@ export function Experiences() {
               const Icon = icons[x.type];
               const isOpen = openId === x.id;
               return (
-                <motion.li layout key={x.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }} className="card flex flex-col p-6 transition hover:-translate-y-1 hover:shadow-xl">
+                <motion.li layout key={x.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }} className="card hud flex flex-col p-6 transition hover:-translate-y-1 hover:shadow-xl">
                   <div className="mb-4 flex items-center justify-between">
-                    <span className="grid h-11 w-11 place-items-center rounded-xl bg-brand/10 text-brand2 dark:bg-accent/15 dark:text-accent"><Icon size={20} /></span>
+                    <span className="grid h-11 w-11 place-items-center rounded-xl bg-accent/10 text-accent"><Icon size={20} /></span>
                     <span className="chip">{e.types[x.type]}</span>
                   </div>
-                  <h3 className="font-display text-lg font-bold text-brand">{x.institution}</h3>
+                  <h3 className="font-display text-lg font-bold text-ink">{x.institution}</h3>
                   <p className="font-medium">{x.role[lang]}</p>
                   <p className="mt-1 flex items-center gap-1.5 text-xs text-muted"><Calendar size={13} /> {x.period[lang]}</p>
                   <p className={`mt-3 text-sm leading-relaxed text-muted ${isOpen ? "" : "line-clamp-2"}`}>{x.description[lang]}</p>
-                  <button onClick={() => setOpenId(isOpen ? null : x.id)} aria-expanded={isOpen} className="mt-auto flex items-center gap-1 pt-4 text-sm font-semibold text-brand2 dark:text-accent">
+                  <button onClick={() => setOpenId(isOpen ? null : x.id)} aria-expanded={isOpen} className="mt-auto flex items-center gap-1 pt-4 text-sm font-semibold text-accent">
                     {isOpen ? e.less : e.more} <ChevronDown size={16} className={`transition ${isOpen ? "rotate-180" : ""}`} />
                   </button>
                 </motion.li>

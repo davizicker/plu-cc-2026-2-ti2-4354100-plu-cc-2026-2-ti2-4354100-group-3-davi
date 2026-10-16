@@ -3,7 +3,7 @@ export const pt = {
   nav: { home: "Início", about: "Sobre mim", projects: "Projetos", experiences: "Experiências", contact: "Contato" },
   hero: {
     hello: "Oi, eu sou o",
-    roles: ["estudante de Ciência da Computação", "técnico em Informática", "apoio administrativo e tecnológico", "curioso por natureza"],
+    roles: ["estudante de Ciência da Computação", "técnico em Informática", "estagiário na SRE Metropolitana A", "gamer e criador de conteúdo"],
     tagline: "Gosto de deixar documentos, dados e sistemas em ordem — e de aprender algo novo todo dia. Seja bem-vindo(a) ao meu cantinho na internet.",
     seeProjects: "Ver projetos",
     resume: "Baixar currículo",
@@ -15,8 +15,8 @@ export const pt = {
     kicker: "Sobre mim",
     title: "Prazer, Davi!",
     p1: "Sou estudante de Ciência da Computação na PUC Minas e Técnico em Informática pelo COTEMIG Barroca. Moro em Belo Horizonte e sou do tipo que se atenta aos detalhes: gosto de conferir, organizar e fazer as coisas direito.",
-    p2: "Me interesso por rotinas administrativas digitais, planilhas, sistemas e por qualquer ferramenta que deixe o trabalho de uma equipe mais leve. Tenho um perfil comunicativo, responsável e discreto, e estou sempre disposto a aprender.",
-    goalTitle: "O que eu busco",
+    p2: "Me interesso por rotinas administrativas digitais, planilhas, sistemas e por qualquer ferramenta que deixe o trabalho de uma equipe mais leve. Hoje estagio na SRE Metropolitana A e, fora do expediente, mantenho o perfil Bradock dos Games, no Instagram — onde misturo a paixão por games com um pouco de vendas e atendimento.",
+    goalTitle: "Missão atual",
     goal: "Atuar em apoio administrativo e tecnológico, contribuindo com atendimento ao público, organização de documentos, apoio em sistemas, conferência de informações e elaboração de planilhas.",
     facts: [
       { v: "2", l: "idiomas além do português" },
@@ -62,7 +62,7 @@ export const pt = {
     title: "Por onde passei",
     subtitle: "Estudos, freelas, eventos e tudo que me fez crescer.",
     all: "Todas",
-    types: { academico: "Acadêmico", estagio: "Estágio", freela: "Freela", opensource: "Open source", evento: "Evento" },
+    types: { academico: "Acadêmico", estagio: "Estágio", freela: "Freela", opensource: "Open source", evento: "Evento", criador: "Criador" },
     more: "Ler mais",
     less: "Ler menos",
   },

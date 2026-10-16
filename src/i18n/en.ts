@@ -5,7 +5,7 @@ export const en: Dict = {
   nav: { home: "Home", about: "About", projects: "Projects", experiences: "Experience", contact: "Contact" },
   hero: {
     hello: "Hi, I'm",
-    roles: ["a Computer Science student", "an IT technician", "administrative & tech support", "curious by nature"],
+    roles: ["a Computer Science student", "an IT technician", "an intern at SRE Metropolitana A", "a gamer & content creator"],
     tagline: "I like keeping documents, data and systems in order — and learning something new every day. Welcome to my little corner of the internet.",
     seeProjects: "See projects",
     resume: "Download résumé",
@@ -17,8 +17,8 @@ export const en: Dict = {
     kicker: "About me",
     title: "Nice to meet you, I'm Davi!",
     p1: "I'm a Computer Science student at PUC Minas and an IT Technician from COTEMIG Barroca. I live in Belo Horizonte, Brazil, and I'm the kind of person who pays attention to details: I like checking, organizing and doing things right.",
-    p2: "I'm into digital administrative routines, spreadsheets, systems and any tool that makes a team's work lighter. I'm communicative, responsible and discreet, and always ready to learn.",
-    goalTitle: "What I'm looking for",
+    p2: "I'm into digital administrative routines, spreadsheets, systems and any tool that makes a team's work lighter. I currently intern at SRE Metropolitana A and, off the clock, I run the Bradock dos Games profile on Instagram — mixing my passion for games with a bit of sales and customer service.",
+    goalTitle: "Current mission",
     goal: "To work in administrative and technological support, helping with customer service, document organization, systems support, information checking and spreadsheet building.",
     facts: [
       { v: "2", l: "languages besides Portuguese" },
@@ -64,7 +64,7 @@ export const en: Dict = {
     title: "Where I've been",
     subtitle: "Studies, freelance gigs, events and everything that helped me grow.",
     all: "All",
-    types: { academico: "Academic", estagio: "Internship", freela: "Freelance", opensource: "Open source", evento: "Event" },
+    types: { academico: "Academic", estagio: "Internship", freela: "Freelance", opensource: "Open source", evento: "Event", criador: "Creator" },
     more: "Read more",
     less: "Read less",
   },

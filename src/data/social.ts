@@ -7,6 +7,7 @@ export const PROFILE = {
   // TODO: troque pelos seus links reais
   linkedin: "https://www.linkedin.com/in/davizicker",
   github: "https://github.com/davizicker",
-  instagram: "",
+  // TODO: confirme o @ do Instagram
+  instagram: "https://www.instagram.com/bradockdosgames",
   resume: "/curriculo-davi-zicker.pdf",
 };

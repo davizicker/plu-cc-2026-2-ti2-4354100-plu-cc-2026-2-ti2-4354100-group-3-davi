@@ -9,13 +9,13 @@ export const metadata: Metadata = {
   openGraph: { title: "Davi Zicker — Portfólio", description: "Estudante de Ciência da Computação · PUC Minas · Belo Horizonte", type: "website", locale: "pt_BR", images: ["/images/davi.jpg"] },
   icons: { icon: "/favicon.svg" },
 };
-export const viewport: Viewport = { themeColor: "#0B2A5B" };
+export const viewport: Viewport = { themeColor: "#0C0D10" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <LanguageProvider>{children}</LanguageProvider>
         </ThemeProvider>
       </body>

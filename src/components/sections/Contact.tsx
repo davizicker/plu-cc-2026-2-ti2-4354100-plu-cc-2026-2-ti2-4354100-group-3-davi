@@ -45,8 +45,8 @@ export function Contact() {
         <SectionTitle kicker={c.kicker} title={c.title} subtitle={c.subtitle} />
         <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
           <Reveal className="space-y-6">
-            <div className="card p-6">
-              <h3 className="mb-4 font-display text-lg font-bold text-brand">{c.channels}</h3>
+            <div className="card hud p-6">
+              <h3 className="mb-4 font-display text-lg font-bold text-ink">{c.channels}</h3>
               <SocialLinks />
               <dl className="mt-6 space-y-2 text-sm">
                 <div className="flex gap-2"><dt className="font-semibold">E-mail:</dt><dd className="text-muted break-all">{PROFILE.email}</dd></div>
@@ -58,7 +58,7 @@ export function Contact() {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <form onSubmit={handleSubmit(onSubmit)} noValidate className="card space-y-5 p-6 sm:p-8">
+            <form onSubmit={handleSubmit(onSubmit)} noValidate className="card hud space-y-5 p-6 sm:p-8">
               <input type="text" tabIndex={-1} autoComplete="off" aria-hidden className="hidden" {...register("website")} />
               {([["name", f.name, "text"], ["email", f.email, "email"]] as const).map(([k, label, type]) => (
                 <div key={k}>

@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { FaGithub, FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
+import { FaGithub, FaInstagram, FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { Check, Copy } from "lucide-react";
 import { PROFILE } from "@/data/social";
@@ -12,6 +12,7 @@ export function SocialLinks({ size = "md" }: { size?: "sm" | "md" }) {
     { label: "WhatsApp", href: PROFILE.whatsapp, icon: FaWhatsapp, color: "hover:bg-green-500" },
     { label: "LinkedIn", href: PROFILE.linkedin, icon: FaLinkedinIn, color: "hover:bg-[#0A66C2]" },
     { label: "GitHub", href: PROFILE.github, icon: FaGithub, color: "hover:bg-[#24292f]" },
+    ...(PROFILE.instagram ? [{ label: "Instagram — Bradock dos Games", href: PROFILE.instagram, icon: FaInstagram, color: "hover:bg-[#d62976]" }] : []),
   ];
   const dim = size === "sm" ? "h-11 w-11" : "h-14 w-14";
   return (
@@ -19,7 +20,7 @@ export function SocialLinks({ size = "md" }: { size?: "sm" | "md" }) {
       {links.map(({ label, href, icon: Icon, color }) => (
         <li key={label}>
           <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" aria-label={label} title={label}
-            className={`${dim} grid place-items-center rounded-2xl border border-line bg-surface text-xl text-brand transition duration-200 hover:-translate-y-1.5 hover:rotate-3 hover:border-transparent hover:text-white hover:shadow-lg dark:text-ink ${color}`}>
+            className={`${dim} grid place-items-center rounded-xl border border-line bg-surface text-xl text-ink transition duration-200 hover:-translate-y-1.5 hover:border-transparent hover:text-white hover:shadow-lg ${color}`}>
             <Icon />
           </a>
         </li>

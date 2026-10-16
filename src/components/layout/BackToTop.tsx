@@ -12,7 +12,7 @@ export function BackToTop() {
     return () => window.removeEventListener("scroll", on);
   }, []);
   return (
-    <a href="#home" aria-label={t.footer.top} className={`fixed bottom-6 right-6 z-40 grid h-12 w-12 place-items-center rounded-full bg-brand text-bg shadow-lg transition duration-300 hover:-translate-y-1 dark:bg-accent dark:text-[#04101f] ${show ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"}`}>
+    <a href="#home" aria-label={t.footer.top} className={`fixed bottom-6 right-6 z-40 grid h-12 w-12 place-items-center rounded-lg border border-accent/50 bg-surface text-accent shadow-lg hover:shadow-[0_0_18px_rgb(var(--accent)/0.5)] transition duration-300 hover:-translate-y-1  ${show ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"}`}>
       <ArrowUp size={20} />
     </a>
   );

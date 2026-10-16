@@ -16,7 +16,7 @@ export interface Project {
   media: string;
 }
 
-export type ExperienceType = "academico" | "estagio" | "freela" | "opensource" | "evento";
+export type ExperienceType = "academico" | "estagio" | "freela" | "opensource" | "evento" | "criador";
 
 export interface Experience {
   id: string;
