@@ -1,0 +1,47 @@
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/space-grotesk";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: 247 249 254;
+  --surface: 255 255 255;
+  --ink: 11 28 58;
+  --muted: 88 102 130;
+  --line: 214 224 243;
+  --brand: 11 42 91;
+  --brand2: 30 79 168;
+  --accent: 14 165 198;
+  --warm: 255 176 66;
+}
+.dark {
+  --bg: 7 14 31;
+  --surface: 14 26 54;
+  --ink: 232 238 251;
+  --muted: 160 175 205;
+  --line: 36 54 96;
+  --brand: 143 180 240;
+  --brand2: 96 145 235;
+  --accent: 34 211 238;
+  --warm: 255 190 90;
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+body { @apply bg-bg text-ink font-sans antialiased; transition: background-color .3s; }
+::selection { background: rgb(var(--accent) / .3); }
+:focus-visible { outline: 2px solid rgb(var(--accent)); outline-offset: 3px; border-radius: 6px; }
+
+@layer components {
+  .container-x { @apply mx-auto w-full max-w-6xl px-5 sm:px-8; }
+  .card { @apply rounded-2xl border border-line bg-surface shadow-[0_8px_30px_-12px_rgb(var(--brand)/0.18)]; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition duration-200 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed; }
+  .btn-primary { @apply btn bg-brand text-bg hover:-translate-y-0.5 hover:shadow-lg dark:bg-accent dark:text-[#04101f]; }
+  .btn-ghost { @apply btn border border-line bg-surface hover:border-brand2 hover:-translate-y-0.5; }
+  .chip { @apply inline-flex items-center rounded-full border border-line bg-bg px-3 py-1 text-xs font-medium text-muted; }
+  .input { @apply w-full rounded-xl border border-line bg-bg px-4 py-3 text-sm outline-none transition focus:border-brand2 focus:ring-2 focus:ring-brand2/20; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
