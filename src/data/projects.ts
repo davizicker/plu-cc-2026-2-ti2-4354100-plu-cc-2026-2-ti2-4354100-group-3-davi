@@ -4,6 +4,34 @@ import type { Project } from "@/types";
 // copie um bloco, coloque o print em public/projects/ e ajuste os campos.
 export const projects: Project[] = [
   {
+    id: "adacct",
+    year: 2023,
+    name: "ADACCT — fork para estudo",
+    description: {
+      pt: "Fork de uma ferramenta open source em Python (criada por I506dk) que confere e-mails e hashes de senha de contas do Active Directory no banco do HaveIBeenPwned. Guardei para estudar como automatizar verificações de segurança em ambientes corporativos. O mérito do código original é do autor.",
+      en: "Fork of an open-source Python tool (created by I506dk) that checks Active Directory account emails and password hashes against HaveIBeenPwned. I kept it to study how to automate security checks in corporate environments. Credit for the original code goes to its author.",
+    },
+    technologies: ["Python", "Active Directory", "Segurança"],
+    repoUrl: "https://github.com/davizicker/ADACCT",
+    media: "/projects/adacct.svg",
+  },
+  {
+    id: "puc-cc",
+    year: 2026,
+    name: "Meus projetos do curso de Ciência da Computação",
+    description: {
+      pt: "Repositório pessoal onde guardo o que produzo na PUC Minas: listas de exercícios em C++, Algoritmos e Estruturas de Dados, Matemática Discreta, DIW, TI1, projeto extensionista e mentoria de carreira — organizado por período.",
+      en: "Personal repository where I keep what I produce at PUC Minas: C++ exercise lists, Algorithms and Data Structures, Discrete Math, Web Interfaces, TI1, an outreach project and career mentoring — organized by semester.",
+    },
+    highlights: [
+      { pt: "1º e 2º períodos documentados, com exercícios, tarefas e projetos", en: "1st and 2nd semesters documented, with exercises, assignments and projects" },
+      { pt: "Mostra minha evolução do básico de programação até aplicações web", en: "Shows my progress from programming basics to web applications" },
+    ],
+    technologies: ["C++", "HTML", "CSS", "JavaScript", "Git"],
+    repoUrl: "https://github.com/davizicker/PUC_MINAS_CC",
+    media: "/projects/puc-cc.svg",
+  },
+  {
     id: "av1-diw",
     year: 2026,
     name: "AV1 — Página de perfil (DIW)",
@@ -14,6 +42,24 @@ export const projects: Project[] = [
     technologies: ["HTML", "CSS"],
     repoUrl: "https://github.com/davizicker/AV1-DIW",
     media: "/projects/av1-diw.png",
+  },
+  {
+    id: "painel-dipe",
+    year: 2026,
+    name: "Painel DIPE — leitura de atos com OCR",
+    description: {
+      pt: "Painel para ler e revisar atos de pessoal publicados no Diário Oficial, usando OCR em Python e interface em React, e gerar laudas automaticamente. Evoluiu com dezenas de correções e testes para acertar casos reais de formatação do Diário.",
+      en: "Dashboard to read and review personnel acts published in the Official Gazette, using Python OCR and a React interface, and to generate reports automatically. It evolved through dozens of fixes and tests to handle real-world formatting cases.",
+    },
+    highlights: [
+      { pt: "Backend em Python com OCR e API; frontend em React + TypeScript", en: "Python backend with OCR and API; React + TypeScript frontend" },
+      { pt: "Testes automatizados e documentação de cada correção", en: "Automated tests and documentation of every fix" },
+      { pt: "Publicação configurada para a Render (Docker + site estático)", en: "Deployment configured for Render (Docker + static site)" },
+    ],
+    technologies: ["React", "TypeScript", "Python", "OCR", "Docker"],
+    repoUrl: "https://github.com/davizicker/anderson",
+    private: true,
+    media: "/projects/painel-dipe.svg",
   },
   {
     id: "lacuna",
