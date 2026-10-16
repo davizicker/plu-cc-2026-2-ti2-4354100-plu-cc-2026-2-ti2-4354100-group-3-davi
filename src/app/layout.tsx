@@ -4,9 +4,10 @@ import { LanguageProvider } from "@/context/LanguageContext";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://portifolio-pi-neon-36.vercel.app"),
   title: "Davi Zicker — Portfólio",
   description: "Portfólio de Davi Zicker, estudante de Ciência da Computação na PUC Minas. Projetos, experiências e contato.",
-  openGraph: { title: "Davi Zicker — Portfólio", description: "Estudante de Ciência da Computação · PUC Minas · Belo Horizonte", type: "website", locale: "pt_BR", images: ["/images/davi.jpg"] },
+  openGraph: { title: "Davi Zicker — Portfólio", description: "Estudante de Ciência da Computação · PUC Minas · Belo Horizonte", url: "/", type: "website", locale: "pt_BR", images: ["/images/davi.jpg"] },
   icons: { icon: "/favicon.svg" },
 };
 export const viewport: Viewport = { themeColor: "#0C0D10" };

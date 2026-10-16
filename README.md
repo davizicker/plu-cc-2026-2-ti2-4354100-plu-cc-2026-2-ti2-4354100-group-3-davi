@@ -2,7 +2,7 @@
 
 Site de portfólio profissional do Laboratório 01 (DIW · PUC Minas): bilíngue (PT/EN), responsivo, com tema claro/escuro, timeline de projetos, experiências e formulário de contato funcional.
 
-🔗 **Site publicado:** _TODO — cole aqui o link da Vercel após o deploy_
+🔗 **Site publicado:** https://portifolio-pi-neon-36.vercel.app
 
 ![Home](docs/screenshots/home-desktop.png)
 ![Timeline de projetos](docs/screenshots/projetos-timeline.png)
@@ -67,7 +67,7 @@ npm run build && npm start   # produção
 ## Deploy (Vercel)
 1. Importe o repositório em vercel.com → *New Project*.
 2. Em *Environment Variables*, adicione as três variáveis `NEXT_PUBLIC_EMAILJS_*`.
-3. *Deploy* e cole o link acima.
+3. *Deploy*. Endereço atual: https://portifolio-pi-neon-36.vercel.app
 
 ## Personalizando o conteúdo
 Edite `src/data/projects.ts`, `src/data/experiences.ts` e `src/data/social.ts` (links de LinkedIn/GitHub). Textos PT/EN em `src/i18n/`.
