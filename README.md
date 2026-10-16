@@ -14,7 +14,7 @@ Site de portfólio profissional do Laboratório 01 (DIW · PUC Minas): bilíngue
 ## Projetos em destaque
 - **Lacuna** — startup de diagnóstico e matching de soluções (davizicker/STARTUP)
 - **Portal / Painel SRE Metropolitana A** — dashboard institucional multi-setor com Supabase (davizicker/jerf e nte2coord-dev/PAINEL-METROPOLITANA)
-- **Painel DIPE** — leitura de atos com OCR (React + Python) · **PUC Minas CC** — projetos do curso · **ADACCT** — fork para estudo
+- **Painel DIPE** — leitura de atos com OCR (React + Python) · **PUC Minas CC** — projetos do curso · **ADACCT** — checagem de contas do Active Directory
 - **AV1 — Página de perfil (DIW)** — HTML/CSS (davizicker/AV1-DIW)
 - **Este portfólio**
 

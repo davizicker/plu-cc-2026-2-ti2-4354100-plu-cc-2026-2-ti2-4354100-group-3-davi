@@ -6,11 +6,16 @@ export const projects: Project[] = [
   {
     id: "adacct",
     year: 2023,
-    name: "ADACCT — fork para estudo",
+    name: "ADACCT — checagem de contas do Active Directory",
     description: {
-      pt: "Fork de uma ferramenta open source em Python (criada por I506dk) que confere e-mails e hashes de senha de contas do Active Directory no banco do HaveIBeenPwned. Guardei para estudar como automatizar verificações de segurança em ambientes corporativos.",
-      en: "Fork of an open-source Python tool (created by I506dk) that checks Active Directory account emails and password hashes against HaveIBeenPwned. I kept it to study how to automate security checks in corporate environments.",
+      pt: "Ferramenta em Python que confere e-mails e hashes de senha das contas do Active Directory no banco do HaveIBeenPwned, para descobrir quais usuários tiveram dados vazados. Criei com minha outra conta do GitHub (I506dk) e mantenho este espelho no meu perfil principal.",
+      en: "Python tool that checks Active Directory account emails and password hashes against HaveIBeenPwned to find which users have exposed data. I built it under my other GitHub account (I506dk) and keep this mirror on my main profile.",
     },
+    highlights: [
+      { pt: "Lê os e-mails dos usuários direto do Active Directory", en: "Reads user emails straight from Active Directory" },
+      { pt: "Consulta a API do HaveIBeenPwned e confere hashes NTLM", en: "Queries the HaveIBeenPwned API and checks NTLM hashes" },
+      { pt: "Mostra os comprometidos na tela ou envia por e-mail", en: "Shows compromised accounts on screen or sends them by email" },
+    ],
     technologies: ["Python", "Active Directory", "Segurança"],
     repoUrl: "https://github.com/davizicker/ADACCT",
     media: "/projects/adacct.svg",
