@@ -73,7 +73,7 @@ export const pt = {
     channels: "Me encontre aqui",
     copy: "Copiar e-mail",
     copied: "E-mail copiado!",
-    form: { name: "Seu nome", email: "Seu e-mail", message: "Sua mensagem", send: "Enviar mensagem", sending: "Enviando…", ok: "Mensagem enviada! Obrigado, já já eu respondo 💙", fail: "Não consegui enviar agora. Tente de novo ou me chame no WhatsApp.", wait: "Aguarde alguns segundos antes de enviar outra mensagem.", notConfigured: "Envio por e-mail ainda não configurado (veja o README).", errors: { name: "Diga seu nome (mín. 2 letras)", email: "Digite um e-mail válido", message: "Escreva entre 10 e 1000 caracteres" } },
+    form: { name: "Seu nome", email: "Seu e-mail", message: "Sua mensagem", send: "Enviar mensagem", sending: "Enviando…", ok: "Mensagem enviada! Obrigado, já já eu respondo 💙", fail: "Não consegui enviar agora. Tente de novo ou me chame no WhatsApp.", wait: "Aguarde alguns segundos antes de enviar outra mensagem.", mailto: "Abrindo seu aplicativo de e-mail com a mensagem pronta. É só enviar!", errors: { name: "Diga seu nome (mín. 2 letras)", email: "Digite um e-mail válido", message: "Escreva entre 10 e 1000 caracteres" } },
   },
   footer: { made: "Feito com carinho em Belo Horizonte", top: "Voltar ao topo", rights: "Todos os direitos reservados" },
   theme: "Alternar tema",

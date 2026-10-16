@@ -75,7 +75,7 @@ export const en: Dict = {
     channels: "Find me here",
     copy: "Copy email",
     copied: "Email copied!",
-    form: { name: "Your name", email: "Your email", message: "Your message", send: "Send message", sending: "Sending…", ok: "Message sent! Thank you, I'll reply soon 💙", fail: "I couldn't send it right now. Try again or ping me on WhatsApp.", wait: "Please wait a few seconds before sending another message.", notConfigured: "Email sending isn't configured yet (see the README).", errors: { name: "Tell me your name (min. 2 letters)", email: "Enter a valid email", message: "Write between 10 and 1000 characters" } },
+    form: { name: "Your name", email: "Your email", message: "Your message", send: "Send message", sending: "Sending…", ok: "Message sent! Thank you, I'll reply soon 💙", fail: "I couldn't send it right now. Try again or ping me on WhatsApp.", wait: "Please wait a few seconds before sending another message.", mailto: "Opening your email app with the message ready. Just hit send!", errors: { name: "Tell me your name (min. 2 letters)", email: "Enter a valid email", message: "Write between 10 and 1000 characters" } },
   },
   footer: { made: "Made with care in Belo Horizonte", top: "Back to top", rights: "All rights reserved" },
   theme: "Toggle theme",

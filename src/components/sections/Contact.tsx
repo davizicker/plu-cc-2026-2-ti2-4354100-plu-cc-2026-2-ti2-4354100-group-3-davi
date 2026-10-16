@@ -12,7 +12,7 @@ import { Reveal } from "@/components/shared/Reveal";
 import { SectionTitle } from "@/components/shared/SectionTitle";
 import { CopyEmail, SocialLinks } from "@/components/shared/SocialLinks";
 
-type Status = "idle" | "sending" | "ok" | "error" | "wait" | "config";
+type Status = "idle" | "sending" | "ok" | "error" | "wait" | "mailto";
 const COOLDOWN = 30_000;
 
 export function Contact() {
@@ -28,7 +28,14 @@ export function Contact() {
       const last = Number(localStorage.getItem("lastSend") || 0);
       if (Date.now() - last < COOLDOWN) return setStatus("wait");
     } catch {}
-    if (!emailConfigured) return setStatus("config");
+    if (!emailConfigured) {
+      // sem EmailJS configurado: abre o app de e-mail do visitante já preenchido
+      const subject = encodeURIComponent(`Contato pelo portfólio — ${v.name}`);
+      const body = encodeURIComponent(`${v.message}\n\n— ${v.name} (${v.email})`);
+      window.location.href = `mailto:${PROFILE.email}?subject=${subject}&body=${body}`;
+      reset();
+      return setStatus("mailto");
+    }
     setStatus("sending");
     try {
       await sendContactEmail(v);
@@ -37,7 +44,7 @@ export function Contact() {
     } catch { setStatus("error"); }
   };
 
-  const msg: Record<Exclude<Status, "idle" | "sending">, string> = { ok: f.ok, error: f.fail, wait: f.wait, config: f.notConfigured };
+  const msg: Record<Exclude<Status, "idle" | "sending">, string> = { ok: f.ok, error: f.fail, wait: f.wait, mailto: f.mailto };
 
   return (
     <section id="contact" className="relative overflow-hidden bg-surface/50 py-24">
@@ -78,8 +85,8 @@ export function Contact() {
               <AnimatePresence>
                 {status !== "idle" && status !== "sending" && (
                   <motion.p key={status} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} role="status"
-                    className={`flex items-start gap-2 rounded-xl p-3 text-sm ${status === "ok" ? "bg-green-500/10 text-green-600 dark:text-green-400" : "bg-amber-500/10 text-amber-700 dark:text-amber-400"}`}>
-                    {status === "ok" ? <CheckCircle2 size={18} className="shrink-0" /> : <TriangleAlert size={18} className="shrink-0" />}
+                    className={`flex items-start gap-2 rounded-xl p-3 text-sm ${status === "ok" || status === "mailto" ? "bg-green-500/10 text-green-600 dark:text-green-400" : "bg-amber-500/10 text-amber-700 dark:text-amber-400"}`}>
+                    {status === "ok" || status === "mailto" ? <CheckCircle2 size={18} className="shrink-0" /> : <TriangleAlert size={18} className="shrink-0" />}
                     {msg[status]}
                   </motion.p>
                 )}
