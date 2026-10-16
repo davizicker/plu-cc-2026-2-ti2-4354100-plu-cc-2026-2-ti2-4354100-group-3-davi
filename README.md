@@ -11,6 +11,11 @@ Site de portfólio profissional do Laboratório 01 (DIW · PUC Minas): bilíngue
 
 > Wireframes do Figma (Lab01S01): salvar os prints em `docs/wireframes/` e referenciar aqui. _TODO_
 
+## Projetos em destaque
+- **Lacuna** — startup de diagnóstico e matching de soluções (davizicker/STARTUP)
+- **Portal / Painel SRE Metropolitana A** — dashboard institucional multi-setor com Supabase (davizicker/jerf e nte2coord-dev/PAINEL-METROPOLITANA)
+- **Este portfólio**
+
 ## Funcionalidades
 - **Sobre mim** em português e inglês (botão PT/EN, preferência salva), trajetória, competências, idiomas e barras de skills por categoria.
 - **Projetos** em timeline do mais antigo ao mais recente, com filtro por tecnologia, modal de detalhes, link do GitHub e imagem/GIF.

@@ -4,6 +4,7 @@ export const skills = [
   { name: "Python", level: 60, group: "dev" },
   { name: "MySQL", level: 60, group: "dev" },
   { name: "C#", level: 50, group: "dev" },
+  { name: "Supabase / PostgreSQL", level: 55, group: "dev" },
   { name: "Word", level: 85, group: "office" },
   { name: "Excel", level: 60, group: "office" },
   { name: "PowerPoint", level: 80, group: "office" },

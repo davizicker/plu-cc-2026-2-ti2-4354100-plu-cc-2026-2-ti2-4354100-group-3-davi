@@ -1,31 +1,43 @@
 import type { Project } from "@/types";
 
-// TODO: substitua pelos seus projetos reais (do mais antigo ao mais recente).
-// Coloque prints/GIFs em public/projects/ e atualize o campo `media`.
+// Ordem cronológica (do mais antigo ao mais recente). Para adicionar um projeto,
+// copie um bloco, coloque o print em public/projects/ e ajuste os campos.
 export const projects: Project[] = [
   {
-    id: "tcc-cotemig",
-    year: 2024,
-    name: "Projeto de conclusão — Técnico em Informática",
+    id: "lacuna",
+    year: 2026,
+    name: "Lacuna — startup de diagnóstico e matching",
     description: {
-      pt: "Sistema desenvolvido no COTEMIG Barroca para fechar o curso técnico: da ideia ao banco de dados, passando pelas telas e pelo login.",
-      en: "System built at COTEMIG Barroca to close out the technical course: from the idea to the database, including screens and login.",
+      pt: "Ideia de startup que detecta falhas de mercado e conecta empresas com problemas a métodos, ferramentas e especialistas que os resolvem. Montei o mapa do negócio e um site de conceito navegável, com demo de diagnóstico, simulador de receita, roadmap e checklist.",
+      en: "A startup idea that spots market gaps and connects companies with problems to the methods, tools and specialists that solve them. I built the business map and a navigable concept site with a diagnosis demo, revenue simulator, roadmap and checklist.",
     },
-    technologies: ["HTML", "CSS", "JavaScript", "MySQL"],
-    repoUrl: "https://github.com/davizicker",
-    media: "/projects/projeto-1.svg",
+    highlights: [
+      { pt: "Jornada do cliente em 7 etapas, do problema ao resultado medido", en: "7-step customer journey, from problem to measured result" },
+      { pt: "Demo de diagnóstico e matching + mapa de demanda local", en: "Diagnosis & matching demo + local demand map" },
+      { pt: "Modelo de negócio, personas, concorrência, riscos e métricas", en: "Business model, personas, competition, risks and metrics" },
+    ],
+    technologies: ["HTML", "CSS", "JavaScript"],
+    repoUrl: "https://github.com/davizicker/STARTUP",
+    media: "/projects/lacuna.png",
   },
   {
-    id: "planilhas",
-    year: 2025,
-    name: "Controle de pendências e prazos",
+    id: "portal-sre",
+    year: 2026,
+    name: "Portal / Painel SRE Metropolitana A",
     description: {
-      pt: "Planilha automatizada para acompanhar demandas, prazos e pendências — foco em organização e conferência de dados.",
-      en: "Automated spreadsheet to track requests, deadlines and pending items — focused on organization and data checking.",
+      pt: "Dashboard institucional que substitui uma planilha de atalhos usada como página inicial de um setor e hoje atende vários setores, cada um com seu espaço próprio. Tudo é editável pelo próprio site: grupos, sistemas, cores, ícones e links.",
+      en: "Institutional dashboard that replaces a spreadsheet of shortcuts used as a department's home page and now serves several departments, each with its own space. Everything is editable on the site itself: groups, systems, colors, icons and links.",
     },
-    technologies: ["Excel", "Python"],
-    repoUrl: "https://github.com/davizicker",
-    media: "/projects/projeto-2.svg",
+    highlights: [
+      { pt: "Login protegido com três papéis (diretor, coordenador e servidor) e acesso isolado por setor", en: "Protected login with three roles (director, coordinator, staff) and per-department access" },
+      { pt: "Cadastro de contas com aprovação, verificação por e-mail e regras de segurança no banco (RLS)", en: "Account sign-up with approval, email verification and database security rules (RLS)" },
+      { pt: "Calculadora de pagamento e leitor do Diário Oficial de MG com PDF e OCR", en: "Payroll calculator and a Minas Gerais Official Gazette reader using PDF parsing and OCR" },
+      { pt: "Catálogo de ferramentas liberadas por setor, busca rápida e tema claro/escuro", en: "Tool catalog enabled per department, quick search and light/dark theme" },
+    ],
+    technologies: ["JavaScript", "Supabase", "PostgreSQL", "Edge Functions", "HTML", "CSS"],
+    repoUrl: "https://github.com/davizicker/jerf",
+    extraLinks: [{ label: "Painel (versão mais recente)", url: "https://github.com/nte2coord-dev/PAINEL-METROPOLITANA" }],
+    media: "/projects/portal-sre.png",
   },
   {
     id: "portfolio",
@@ -36,7 +48,7 @@ export const projects: Project[] = [
       en: "The site you're looking at: bilingual, light/dark theme, interactive timeline and a working contact form.",
     },
     technologies: ["Next.js", "TypeScript", "Tailwind", "Framer Motion"],
-    repoUrl: "https://github.com/davizicker",
-    media: "/projects/projeto-3.svg",
+    repoUrl: "https://github.com/davizicker/plu-cc-2026-2-ti2-4354100-plu-cc-2026-2-ti2-4354100-group-3-davi",
+    media: "/projects/portfolio.png",
   },
 ];

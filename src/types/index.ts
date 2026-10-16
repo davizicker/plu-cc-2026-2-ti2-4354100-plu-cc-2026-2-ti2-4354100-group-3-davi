@@ -9,6 +9,8 @@ export interface Project {
   technologies: string[];
   repoUrl: string;
   liveUrl?: string;
+  extraLinks?: { label: string; url: string }[];
+  highlights?: Bi[];
   media: string;
 }
 
