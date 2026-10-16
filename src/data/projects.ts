@@ -8,8 +8,8 @@ export const projects: Project[] = [
     year: 2023,
     name: "ADACCT — fork para estudo",
     description: {
-      pt: "Fork de uma ferramenta open source em Python (criada por I506dk) que confere e-mails e hashes de senha de contas do Active Directory no banco do HaveIBeenPwned. Guardei para estudar como automatizar verificações de segurança em ambientes corporativos. O mérito do código original é do autor.",
-      en: "Fork of an open-source Python tool (created by I506dk) that checks Active Directory account emails and password hashes against HaveIBeenPwned. I kept it to study how to automate security checks in corporate environments. Credit for the original code goes to its author.",
+      pt: "Fork de uma ferramenta open source em Python (criada por I506dk) que confere e-mails e hashes de senha de contas do Active Directory no banco do HaveIBeenPwned. Guardei para estudar como automatizar verificações de segurança em ambientes corporativos.",
+      en: "Fork of an open-source Python tool (created by I506dk) that checks Active Directory account emails and password hashes against HaveIBeenPwned. I kept it to study how to automate security checks in corporate environments.",
     },
     technologies: ["Python", "Active Directory", "Segurança"],
     repoUrl: "https://github.com/davizicker/ADACCT",
