@@ -49,7 +49,7 @@ function render() {
           <td class="text-end table-actions text-nowrap">${podeEditar(a)
             ? `<button class="btn btn-outline-primary" data-acao="editar" data-id="${a.id}" title="Editar"><i class="bi bi-pencil"></i></button>
                <button class="btn btn-outline-danger" data-acao="excluir" data-id="${a.id}" title="Excluir"><i class="bi bi-trash"></i></button>`
-            : '<span class="text-muted small">somente leitura</span>'}</td></tr>`;
+            : `<a class="btn btn-brand" href="pedidos.html?novo=1&carro=${a.id}" title="Alugar este automóvel"><i class="bi bi-key me-1"></i>Alugar</a>`}</td></tr>`;
       }).join('')
     : estadoVazio('Nenhum automóvel encontrado.', 8);
 }

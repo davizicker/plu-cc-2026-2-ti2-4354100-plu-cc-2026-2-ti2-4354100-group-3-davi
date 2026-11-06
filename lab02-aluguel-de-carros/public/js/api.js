@@ -9,15 +9,41 @@ export class ApiError extends Error {
   }
 }
 
+// Hospedagens gratuitas "dormem" após alguns minutos sem uso: avisa o usuário se a resposta demorar.
+let emAndamento = 0;
+let aviso = null;
+function mostraAviso(ligado) {
+  if (ligado && !aviso) {
+    aviso = document.createElement('div');
+    aviso.className = 'alert alert-info shadow aviso-servidor py-2 px-3 small';
+    aviso.setAttribute('role', 'status');
+    aviso.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Conectando ao servidor… na hospedagem gratuita ele pode levar até 1 minuto para acordar.';
+    document.body.appendChild(aviso);
+  } else if (!ligado && aviso) {
+    aviso.remove();
+    aviso = null;
+  }
+}
+
 async function request(path, options = {}) {
   let res;
+  const controle = new AbortController();
+  const limite = setTimeout(() => controle.abort(), 90000);
+  const lento = setTimeout(() => emAndamento > 0 && mostraAviso(true), 3500);
+  emAndamento++;
   try {
     res = await fetch(`${BASE}${path}`, {
       headers: { 'Content-Type': 'application/json' },
+      signal: controle.signal,
       ...options
     });
   } catch {
-    throw new ApiError('Não foi possível conectar à API. Verifique se o servidor (JSON Server) está em execução.');
+    throw new ApiError('Não foi possível conectar ao servidor. Verifique sua conexão e tente novamente em instantes.');
+  } finally {
+    clearTimeout(limite);
+    clearTimeout(lento);
+    emAndamento--;
+    if (emAndamento === 0) mostraAviso(false);
   }
   if (!res.ok) {
     const corpo = await res.json().catch(() => null);

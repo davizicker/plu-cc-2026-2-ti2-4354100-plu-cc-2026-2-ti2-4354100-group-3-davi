@@ -67,7 +67,22 @@ server.use((req, res, next) => {
   next();
 });
 
-server.use(jsonServer.defaults({ static: PUBLIC_DIR, logger: process.env.NODE_ENV !== 'test' }));
+server.use(jsonServer.defaults({ static: PUBLIC_DIR, logger: process.env.NODE_ENV !== 'test', noCors: true }));
+
+// CORS só é necessário se o front-end estiver em OUTRO domínio. Por padrão (mesma origem ou proxy da Vercel) nada é liberado.
+// ALLOWED_ORIGINS="https://meusite.com,https://www.meusite.com" libera origens específicas.
+const origensPermitidas = (process.env.ALLOWED_ORIGINS || '').split(',').map((o) => o.trim()).filter(Boolean);
+server.use('/api', (req, res, next) => {
+  const origem = req.headers.origin;
+  if (origem && origensPermitidas.includes(origem)) {
+    res.setHeader('Access-Control-Allow-Origin', origem);
+    res.setHeader('Vary', 'Origin');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  }
+  if (req.method === 'OPTIONS') return res.sendStatus(204);
+  return next();
+});
 server.use(jsonServer.bodyParser); // as rotas abaixo (login e hash de senha) precisam do corpo já interpretado
 
 // Login validado no servidor, com limite de 10 tentativas por minuto (IP + e-mail).

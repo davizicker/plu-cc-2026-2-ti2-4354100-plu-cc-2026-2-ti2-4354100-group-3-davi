@@ -53,4 +53,6 @@ $('lista').addEventListener('click', (e) => {
   getModal('modal-contrato').show();
 });
 
+$('btn-imprimir').addEventListener('click', () => window.print());
+
 carrega();

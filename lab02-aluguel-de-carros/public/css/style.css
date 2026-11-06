@@ -36,3 +36,25 @@ footer { font-size: .85rem; }
   .table-stack td[colspan] { justify-content: center; }
   .table-stack td.table-actions { justify-content: flex-end; padding-top: .5rem !important; }
 }
+
+.aviso-servidor { position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%); z-index: 2100; max-width: 92vw; margin: 0; }
+.passo { border-left: 4px solid var(--brand); }
+.passo .num { width: 28px; height: 28px; border-radius: 50%; background: var(--brand); color: #fff; font-weight: 700;
+  display: inline-flex; align-items: center; justify-content: center; font-size: .85rem; }
+.etapas { display: flex; align-items: flex-start; margin: 0 0 1rem; padding: 0; list-style: none; }
+.etapas li { flex: 1; text-align: center; position: relative; font-size: .8rem; color: #6c757d; }
+.etapas li::before { content: ""; position: absolute; top: 14px; left: -50%; width: 100%; height: 3px; background: #dee2e6; z-index: 0; }
+.etapas li:first-child::before { display: none; }
+.etapas .bolinha { width: 30px; height: 30px; border-radius: 50%; background: #dee2e6; color: #fff; display: inline-flex;
+  align-items: center; justify-content: center; position: relative; z-index: 1; margin-bottom: .25rem; }
+.etapas li.feito .bolinha, .etapas li.feito::before { background: #198754; }
+.etapas li.atual .bolinha { background: var(--brand); }
+.etapas li.erro .bolinha, .etapas li.erro::before { background: #dc3545; }
+.etapas li.feito, .etapas li.atual { color: #212529; font-weight: 600; }
+.demo-chip { cursor: pointer; }
+@media print {
+  #navbar, #footer, main, .toast-container, .aviso-servidor, .modal-backdrop, .no-print { display: none !important; }
+  .modal { position: static !important; display: block !important; opacity: 1 !important; }
+  .modal-dialog { margin: 0 !important; max-width: 100% !important; transform: none !important; }
+  .modal-content { border: 0 !important; }
+}

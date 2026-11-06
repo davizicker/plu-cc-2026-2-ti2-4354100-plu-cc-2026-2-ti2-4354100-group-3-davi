@@ -35,6 +35,13 @@ const check = (nome, cond, extra='') => { results.push([cond, nome]); console.lo
     await page.waitForURL('**/painel.html');
   };
 
+  // --- Atalhos de demonstração e mostrar senha
+  await page.goto(BASE + '/index.html');
+  await page.click('[data-email="maria@exemplo.com"]');
+  check('conta de demonstração preenche o login', (await page.inputValue('#email')) === 'maria@exemplo.com' && (await page.inputValue('#senha')) === '123456');
+  await page.click('#senha ~ button');
+  check('botão mostrar senha revela o campo', (await page.getAttribute('#senha', 'type')) === 'text');
+
   // --- Login inválido
   await page.goto(BASE + '/index.html');
   await page.fill('#email', 'maria@exemplo.com'); await page.fill('#senha', 'errada');
@@ -92,12 +99,11 @@ const check = (nome, cond, extra='') => { results.push([cond, nome]); console.lo
   await page.waitForSelector('#modal-pedido', { state: 'hidden' });
   check('pedido criado (Em análise)', (await page.textContent('#lista')).includes('Corolla') && (await page.textContent('#lista')).includes('Em análise'));
 
-  // conflito de datas
+  // conflito de datas: o carro reservado fica indisponível e não pode ser escolhido
   await page.click('#btn-novo'); await page.waitForSelector('#modal-pedido.show');
-  await page.selectOption('#p-auto', '4'); await page.fill('#p-inicio', '2027-01-12'); await page.fill('#p-fim', '2027-01-20');
-  await page.click('#btn-salvar-pedido');
-  await page.waitForSelector('#modal-pedido-alerta .alert-danger');
-  check('conflito de período bloqueia pedido', (await page.textContent('#modal-pedido-alerta')).includes('indisponível'));
+  await page.fill('#p-inicio', '2027-01-12'); await page.fill('#p-fim', '2027-01-20');
+  const optCorolla = page.locator('#p-auto option', { hasText: 'Corolla' });
+  check('conflito de período desabilita o automóvel', (await optCorolla.isDisabled()) && (await optCorolla.textContent()).includes('indisponível'));
   await page.waitForTimeout(500); await page.keyboard.press('Escape'); await page.waitForSelector('#modal-pedido', { state: 'hidden' });
 
   // modificar
@@ -108,6 +114,11 @@ const check = (nome, cond, extra='') => { results.push([cond, nome]); console.lo
   await page.click('#btn-salvar-pedido');
   await page.waitForSelector('#modal-pedido', { state: 'hidden' });
   check('pedido modificado', (await page.textContent('#lista')).includes('15/01/2027'));
+
+  await page.locator('#lista tr', { hasText: 'Corolla' }).first().locator('[data-acao=ver]').click();
+  await page.waitForSelector('#modal-detalhe.show .etapas');
+  check('linha do tempo no detalhe do pedido', (await page.locator('.etapas li').count()) === 3);
+  await page.waitForTimeout(500); await page.keyboard.press('Escape'); await page.waitForSelector('#modal-detalhe', { state: 'hidden' });
 
   // cancelar outro pedido (cria e cancela)
   await page.click('#btn-novo'); await page.waitForSelector('#modal-pedido.show');
@@ -178,11 +189,16 @@ const check = (nome, cond, extra='') => { results.push([cond, nome]); console.lo
   await page.goto(BASE + '/contratos.html'); await page.waitForSelector('#lista tr');
   await page.locator('#lista [data-id]').first().click();
   await page.waitForSelector('#modal-contrato.show');
+  check('botão imprimir no contrato', await page.locator('#btn-imprimir').isVisible());
   check('detalhe do contrato', (await page.textContent('#contrato-corpo')).includes('Crédito'));
   await shot('08-contratos');
 
   // --- Agente: CRUD de clientes e automóveis
   await login('banco@exemplo.com');
+  await page.goto(BASE + '/painel.html'); await page.waitForSelector('#avisos .alert');
+  check('painel do agente avisa pedidos para analisar', (await page.textContent('#avisos')).includes('aguardando análise'));
+  await page.goto(BASE + '/pedidos.html?status=Cancelado'); await page.waitForSelector('#lista tr');
+  check('filtro de status via link', (await page.inputValue('#filtro-status')) === 'Cancelado' && !(await page.textContent('#lista')).includes('Em análise'));
   await page.goto(BASE + '/clientes.html'); await page.waitForSelector('#lista tr');
   check('agente lista clientes', (await page.locator('#lista tr').count()) >= 3);
   await page.fill('#busca', 'carlos');
@@ -243,6 +259,13 @@ const check = (nome, cond, extra='') => { results.push([cond, nome]); console.lo
   await login('carlos@exemplo.com');
   await page.goto(BASE + '/automoveis.html'); await page.waitForSelector('#lista tr');
   check('cliente só edita os próprios carros', (await page.locator('#lista [data-acao=editar]').count()) === 2 /* HR-V + Argo agora do Carlos */, String(await page.locator('#lista [data-acao=editar]').count()));
+  // botão Alugar do catálogo e disponibilidade por período
+  await page.locator('#lista tr', { hasText: 'Onix' }).locator('a', { hasText: 'Alugar' }).click();
+  await page.waitForSelector('#modal-pedido.show');
+  check('botão Alugar pré-seleciona o carro', (await page.locator('#p-auto option:checked').textContent()).includes('Onix'));
+  await page.fill('#p-inicio', '2026-10-06'); await page.fill('#p-fim', '2026-10-08');
+  check('carro reservado fica indisponível no período', (await page.locator('#p-auto option[disabled]').allTextContents()).some((t) => t.includes('indisponível')));
+
   // novo pedido: cliente não vê os próprios carros; atalho ?novo=1
   await page.goto(BASE + '/pedidos.html?novo=1'); await page.waitForSelector('#modal-pedido.show');
   const opts = await page.locator('#p-auto option').allTextContents();

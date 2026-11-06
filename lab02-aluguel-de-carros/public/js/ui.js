@@ -147,6 +147,31 @@ export const estadoVazio = (texto, colunas) =>
 export function iniciaPagina(paginaAtiva) {
   renderNavbar(paginaAtiva);
   renderFooter();
+  adicionaToggleSenha();
+}
+
+/** Botão "mostrar/ocultar senha" em todos os campos de senha da página. */
+function adicionaToggleSenha() {
+  document.querySelectorAll('input[type=password]').forEach((campo) => {
+    const grupo = document.createElement('div');
+    grupo.className = 'input-group has-validation';
+    campo.parentNode.insertBefore(grupo, campo);
+    grupo.appendChild(campo);
+    const botao = document.createElement('button');
+    botao.type = 'button';
+    botao.className = 'btn btn-outline-secondary';
+    botao.setAttribute('aria-label', 'Mostrar senha');
+    botao.innerHTML = '<i class="bi bi-eye"></i>';
+    grupo.appendChild(botao);
+    const feedback = grupo.nextElementSibling;
+    if (feedback?.classList.contains('invalid-feedback')) grupo.appendChild(feedback);
+    botao.addEventListener('click', () => {
+      const mostrar = campo.type === 'password';
+      campo.type = mostrar ? 'text' : 'password';
+      botao.innerHTML = `<i class="bi bi-eye${mostrar ? '-slash' : ''}"></i>`;
+      botao.setAttribute('aria-label', mostrar ? 'Ocultar senha' : 'Mostrar senha');
+    });
+  });
 }
 
 export const STATUS_ATIVOS = ['Em análise', 'Aprovado', 'Contratado'];

@@ -59,11 +59,14 @@ async function carrega() {
   try {
     [pedidos, automoveis, agentes] = await Promise.all([api.list('pedidos'), api.list('automoveis'), api.list('agentes')]);
     clientes = agente ? await api.list('clientes') : [await api.get('clientes', sessao.id)];
-    render();
     const params = new URLSearchParams(location.search);
+    const statusUrl = params.get('status');
+    if (statusUrl && [...$('filtro-status').options].some((o) => o.value === statusUrl)) $('filtro-status').value = statusUrl;
+    render();
     if (params.get('novo') && !agente) {
+      const carroPre = Number(params.get('carro')) || null;
       history.replaceState(null, '', 'pedidos.html');
-      abreFormulario();
+      abreFormulario(null, carroPre);
     }
   } catch (err) {
     mostraErro($('alerta'), err.message);
@@ -128,6 +131,20 @@ function opcoesBancos(selecionadoId) {
 function alternaCredito() {
   $('grupo-banco').classList.toggle('d-none', !$('p-credito').checked);
 }
+/** Desabilita no select os automóveis já reservados no período escolhido. */
+function atualizaDisponibilidade() {
+  const inicio = $('p-inicio').value, fim = $('p-fim').value;
+  const periodoValido = inicio && fim && fim >= inicio;
+  [...$('p-auto').options].forEach((op) => {
+    if (!op.value) return;
+    if (op.dataset.base === undefined) op.dataset.base = op.textContent;
+    const ocupado = periodoValido && Boolean(conflito(Number(op.value), inicio, fim, pedidoEmEdicao?.id));
+    op.disabled = ocupado;
+    op.textContent = ocupado ? `${op.dataset.base} — indisponível no período` : op.dataset.base;
+  });
+  if ($('p-auto').selectedOptions[0]?.disabled) $('p-auto').value = '';
+}
+
 function atualizaResumo() {
   const a = carro(Number($('p-auto').value));
   const n = diarias($('p-inicio').value, $('p-fim').value);
@@ -136,12 +153,12 @@ function atualizaResumo() {
     : 'Selecione o automóvel e o período.';
 }
 
-function abreFormulario(p = null) {
+function abreFormulario(p = null, carroPre = null) {
   pedidoEmEdicao = p;
   $('modal-pedido-titulo').textContent = p ? `Modificar pedido #${p.id}` : 'Novo pedido';
   $('modal-pedido-alerta').innerHTML = '';
   $('form-pedido').querySelectorAll('.is-invalid').forEach((el) => el.classList.remove('is-invalid'));
-  opcoesAutomoveis(p?.automovelId);
+  opcoesAutomoveis(p?.automovelId ?? carroPre);
   opcoesBancos(p?.credito?.bancoId);
   $('p-inicio').value = p?.dataInicio ?? '';
   $('p-fim').value = p?.dataFim ?? '';
@@ -150,6 +167,7 @@ function abreFormulario(p = null) {
   $('p-credito').checked = Boolean(p?.credito?.solicitado);
   $('p-obs').value = p?.observacao ?? '';
   alternaCredito();
+  atualizaDisponibilidade();
   atualizaResumo();
   getModal('modal-pedido').show();
 }
@@ -160,6 +178,7 @@ function erro(input, msg) {
   return false;
 }
 
+['p-inicio', 'p-fim'].forEach((id) => $(id).addEventListener('input', atualizaDisponibilidade));
 ['p-auto', 'p-inicio', 'p-fim'].forEach((id) => $(id).addEventListener('input', atualizaResumo));
 $('p-credito').addEventListener('change', alternaCredito);
 $('btn-novo').addEventListener('click', () => abreFormulario());
@@ -214,6 +233,17 @@ $('form-pedido').addEventListener('submit', async (e) => {
 });
 
 // ---- Detalhes --------------------------------------------------------------------------------
+function linhaDoTempo(p) {
+  const etapas = ['Pedido enviado', 'Análise financeira', 'Contrato'];
+  const estado = {
+    'Em análise': ['feito', 'atual', ''], Aprovado: ['feito', 'feito', 'atual'], Contratado: ['feito', 'feito', 'feito'],
+    Reprovado: ['feito', 'erro', ''], Cancelado: ['feito', 'erro', '']
+  }[p.status] ?? ['', '', ''];
+  const icone = (e) => (e === 'feito' ? 'check-lg' : e === 'erro' ? 'x-lg' : e === 'atual' ? 'three-dots' : 'circle');
+  const rotulos = p.status === 'Cancelado' ? ['Pedido enviado', 'Cancelado', 'Contrato'] : p.status === 'Reprovado' ? ['Pedido enviado', 'Reprovado', 'Contrato'] : etapas;
+  return `<ol class="etapas">${rotulos.map((r, i) => `<li class="${estado[i]}"><span class="bolinha"><i class="bi bi-${icone(estado[i])}"></i></span><div>${r}</div></li>`).join('')}</ol>`;
+}
+
 function mostraDetalhes(p) {
   const a = carro(p.automovelId);
   const c = cliente(p.clienteId);
@@ -221,7 +251,7 @@ function mostraDetalhes(p) {
     ? `<div class="alert alert-${p.parecer.decisao === 'Positivo' ? 'success' : 'danger'} py-2 mb-3"><strong>Parecer ${esc(p.parecer.decisao.toLowerCase())}</strong> — ${esc(p.parecer.agenteNome)} em ${fmtDataHora(p.parecer.data)}<br>${esc(p.parecer.texto)}</div>`
     : '<div class="alert alert-light border py-2 mb-3">Aguardando parecer financeiro.</div>';
   $('modal-detalhe-titulo').innerHTML = `Pedido #${p.id} ${badgeStatus(p.status)}`;
-  $('detalhe-corpo').innerHTML = `${parecer}
+  $('detalhe-corpo').innerHTML = `${linhaDoTempo(p)}${parecer}
     <dl class="row mb-0">
       <dt class="col-sm-4">Cliente</dt><dd class="col-sm-8">${esc(c?.nome ?? `Cliente #${p.clienteId}`)}</dd>
       <dt class="col-sm-4">Automóvel</dt><dd class="col-sm-8">${esc(descCarro(a))}${a ? `, ${esc(a.ano)}` : ''}</dd>

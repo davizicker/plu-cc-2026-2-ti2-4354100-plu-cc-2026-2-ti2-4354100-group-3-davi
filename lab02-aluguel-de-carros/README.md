@@ -43,7 +43,7 @@
 ---
 
 ## 🔗 Links Úteis
-* 🌐 **Demo Online:** _(preencher com a URL após o deploy — veja [Deploy](#-deploy))_
+* 🌐 **Demo Online:** _(preencher com a URL após o deploy — veja [docs/hospedagem.md](docs/hospedagem.md))_
 * 📖 **Modelagem UML:** [docs/modelagem.md](docs/modelagem.md)
 * 📝 **Histórias de usuário:** [docs/historias-de-usuario.md](docs/historias-de-usuario.md)
 
@@ -69,7 +69,8 @@ Locadoras e bancos precisam analisar, aprovar e formalizar aluguéis de veículo
 - 🏦 **Contrato de crédito** opcional com banco, parcela pela Tabela Price.
 - 📄 **Contratos:** execução pelo agente, atualização do proprietário do veículo e consulta.
 - 🛡️ **Regras e segurança:** conflito de datas, bloqueio de exclusões com vínculos ativos, recusa de ações sobre pedidos desatualizados, senhas com hash, CSP e escape contra XSS.
-- 📱 **Responsivo** (Bootstrap 5, mobile-first).
+- 🧭 **Experiência guiada:** painel com avisos do próximo passo, atalhos filtrados, botão *Alugar* no catálogo, carros indisponíveis desabilitados por período, linha do tempo do pedido, contas de demonstração clicáveis, mostrar/ocultar senha e impressão do contrato.
+- 📱 **Responsivo** (Bootstrap 5, mobile-first; tabelas viram cartões no celular).
 
 ---
 
@@ -142,17 +143,16 @@ Para restaurar os dados iniciais: `npm run reset-db` (usa `git checkout -- db.js
 ---
 
 ## 🚀 Deploy
-O projeto precisa de um servidor Node.js (o JSON Server grava no `db.json`), portanto **não roda apenas em hospedagem estática** (GitHub Pages, Vercel estático).
+O JSON Server grava no `db.json`, então a **API precisa de um servidor Node.js** (Render, Railway…). A Vercel só hospeda o front-end estático.
 
-**Opção recomendada — Render (gratuito, um único serviço):**
-1. Envie o repositório ao GitHub.
-2. No [Render](https://render.com): *New → Web Service* → selecione o repositório.
-3. Configure: **Root Directory** `lab02-aluguel-de-carros` · **Build** `npm install` · **Start** `npm start` (ou use *Blueprint* com o `render.yaml`).
-4. Após o deploy, abra a URL gerada e copie-a para a seção [Links Úteis](#-links-úteis).
+**Recomendado — site na Vercel (seu domínio) + API no Render (grátis):** o `vercel.json` já encaminha `/api/*` para o Render.
+👉 **Passo a passo completo:** [docs/hospedagem.md](docs/hospedagem.md)
 
-> ⚠️ No plano gratuito o disco é efêmero: os dados voltam ao `db.json` do repositório a cada novo deploy/reinício. Para persistir, use um disco do Render e defina `DB_FILE`.
+**Alternativa — tudo no Render (um único serviço):**
+1. [Render](https://render.com) → *New → Web Service* → este repositório.
+2. **Root Directory** `lab02-aluguel-de-carros` · **Build** `npm install` · **Start** `npm start` (ou *Blueprint* com `render.yaml`).
 
-**Alternativa — front-end separado:** hospede a pasta `public/` em hospedagem estática, a API em outro serviço Node e ajuste `API_URL` em `public/config.js` (ex.: `https://meu-servico.onrender.com/api`).
+> ⚠️ No plano gratuito o Render "dorme" após ~15 min (a primeira requisição demora) e o disco é efêmero: os dados voltam ao `db.json` do repositório a cada deploy/reinício.
 
 ---
 
@@ -163,10 +163,12 @@ lab02-aluguel-de-carros/
 ├── server.js              # API (/api), login seguro e arquivos estáticos
 ├── LICENSE
 ├── render.yaml            # Blueprint de deploy (Render)
+├── vercel.json            # Site estático na Vercel + proxy /api para o Render
 ├── docs/
 │   ├── fontes/            # Diagramas PlantUML (.puml)
 │   ├── diagramas/         # Diagramas renderizados (.png)
 │   ├── screenshots/       # Capturas de tela
+│   ├── hospedagem.md      # Passo a passo Vercel + Render + domínio
 │   ├── historias-de-usuario.md
 │   └── modelagem.md
 ├── scripts/               # reset-db e runner dos testes
@@ -204,7 +206,7 @@ API REST (JSON Server):     http://localhost:3000/api/clientes
 ---
 
 ## 🧪 Testes
-Teste ponta a ponta em navegador real (Playwright) cobrindo cadastro e validações, login, criar/modificar/cancelar pedidos, conflito de datas, avaliação, contrato com e sem crédito, troca de proprietário, CRUD de clientes e automóveis, bloqueios de exclusão, rotas protegidas e ausência de erros no console (**52 verificações**, incluindo segurança do servidor).
+Teste ponta a ponta em navegador real (Playwright) cobrindo cadastro e validações, login, criar/modificar/cancelar pedidos, conflito de datas, avaliação, contrato com e sem crédito, troca de proprietário, CRUD de clientes e automóveis, bloqueios de exclusão, rotas protegidas e ausência de erros no console (**60 verificações**, incluindo segurança do servidor).
 
 ```bash
 npm i --no-save playwright && npx playwright install chromium

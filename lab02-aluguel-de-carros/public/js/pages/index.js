@@ -9,6 +9,14 @@ if (new URLSearchParams(location.search).get('cadastro') === 'ok') {
   aviso.innerHTML = '<div class="alert alert-success py-2">Cadastro realizado! Entre com seu e-mail e senha.</div>';
 }
 
+document.getElementById('demo-contas').addEventListener('click', (e) => {
+  const chip = e.target.closest('[data-email]');
+  if (!chip) return;
+  document.getElementById('email').value = chip.dataset.email;
+  document.getElementById('senha').value = '123456';
+  document.getElementById('btn-entrar').focus();
+});
+
 document.getElementById('form-login').addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = document.getElementById('email').value;
