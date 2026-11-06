@@ -23,7 +23,8 @@ const check = (nome, cond, extra='') => { results.push([cond, nome]); console.lo
   if (NM) await ctx.route('https://cdn.jsdelivr.net/**', cdn);
   const page = await ctx.newPage();
   page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));
-  page.on('console', (m) => { if (m.type() === 'error') errors.push('console: ' + m.text()); });
+  // o 401 do login com senha errada é esperado (o navegador o registra no console)
+  page.on('console', (m) => { if (m.type() === 'error' && !m.text().includes('401 (Unauthorized)')) errors.push('console: ' + m.text()); });
   page.on('dialog', (d) => d.accept());
   const shot = (n) => page.screenshot({ path: `${process.env.SHOTS_DIR || '/tmp'}/lab02-${n}.png`, fullPage: true });
   const login = async (email, senha = '123456') => {
@@ -242,6 +243,38 @@ const check = (nome, cond, extra='') => { results.push([cond, nome]); console.lo
   await login('carlos@exemplo.com');
   await page.goto(BASE + '/automoveis.html'); await page.waitForSelector('#lista tr');
   check('cliente só edita os próprios carros', (await page.locator('#lista [data-acao=editar]').count()) === 2 /* HR-V + Argo agora do Carlos */, String(await page.locator('#lista [data-acao=editar]').count()));
+  // novo pedido: cliente não vê os próprios carros; atalho ?novo=1
+  await page.goto(BASE + '/pedidos.html?novo=1'); await page.waitForSelector('#modal-pedido.show');
+  const opts = await page.locator('#p-auto option').allTextContents();
+  check('cliente não pode alugar o próprio carro', !opts.some((o) => o.includes('HR-V')) && !opts.some((o) => o.includes('Argo')) && opts.some((o) => o.includes('Onix')), opts.join('|'));
+
+  // ação sobre pedido desatualizado (outro usuário alterou antes)
+  await login('banco@exemplo.com');
+  await page.goto(BASE + '/pedidos.html'); await page.waitForSelector('#lista tr');
+  await page.locator('#lista tr', { hasText: 'T-Cross' }).locator('[data-acao=avaliar]').click();
+  await page.waitForSelector('#modal-avaliacao.show'); await page.waitForTimeout(500);
+  await fetch(BASE + '/api/pedidos/1', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'Cancelado' }) });
+  await page.fill('#a-parecer', 'Parecer de teste.'); await page.click('#btn-aprovar');
+  await page.waitForSelector('.toast.text-bg-warning');
+  check('ação sobre pedido desatualizado é recusada', (await (await fetch(BASE + '/api/pedidos/1')).json()).status === 'Cancelado');
+
+  // segurança do servidor
+  const clAPI = await (await fetch(BASE + '/api/clientes')).json();
+  const agAPI = await (await fetch(BASE + '/api/agentes')).json();
+  check('API não expõe senhas', clAPI.every((c) => !('senha' in c)) && agAPI.every((a) => !('senha' in a)));
+  const post = (corpo) => fetch(BASE + '/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(corpo) });
+  const bom = await post({ email: 'ana@exemplo.com', senha: 'abc123' });
+  check('login no servidor devolve sessão sem senha', bom.status === 200 && !JSON.stringify(await bom.json()).includes('senha'));
+  check('login inválido retorna 401', (await post({ email: 'ana@exemplo.com', senha: 'errada' })).status === 401);
+  if (process.env.E2E_DB) {
+    const bruto = JSON.parse(fs.readFileSync(process.env.E2E_DB, 'utf8'));
+    check('senha de conta nova é gravada com hash', bruto.clientes.find((c) => c.email === 'ana@exemplo.com').senha.startsWith('scrypt$'));
+  }
+  const cab = (await fetch(BASE + '/')).headers;
+  check('cabeçalhos de segurança presentes', Boolean(cab.get('content-security-policy')) && cab.get('x-content-type-options') === 'nosniff');
+  const nf = await fetch(BASE + '/nao-existe');
+  check('página 404 amigável', nf.status === 404 && (await nf.text()).includes('Página não encontrada'));
+
   // rotas protegidas
   await page.evaluate(() => sessionStorage.clear());
   await page.goto(BASE + '/pedidos.html'); await page.waitForURL('**/index.html');

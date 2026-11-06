@@ -1,5 +1,5 @@
 // Autenticação simulada: cadastro prévio + sessão no sessionStorage.
-// ATENÇÃO: projeto acadêmico — senhas ficam em texto puro no db.json (não use em produção).
+// As senhas são validadas e guardadas (hash) no servidor; o navegador nunca as recebe de volta.
 import { api } from './api.js';
 
 const CHAVE = 'aluguel.sessao';
@@ -25,16 +25,7 @@ export function logout() {
 }
 
 export async function login(email, senha) {
-  const e = String(email).trim().toLowerCase();
-  const [clientes, agentes] = await Promise.all([
-    api.list('clientes', { email: e }),
-    api.list('agentes', { email: e })
-  ]);
-  const cliente = clientes.find((c) => c.senha === senha);
-  const agente = agentes.find((a) => a.senha === senha);
-  let sessao = null;
-  if (cliente) sessao = { perfil: 'cliente', id: cliente.id, nome: cliente.nome };
-  else if (agente) sessao = { perfil: 'agente', id: agente.id, nome: agente.nome, tipo: agente.tipo };
+  const sessao = await api.login(String(email).trim().toLowerCase(), senha);
   if (!sessao) return null;
   sessionStorage.setItem(CHAVE, JSON.stringify(sessao));
   return sessao;

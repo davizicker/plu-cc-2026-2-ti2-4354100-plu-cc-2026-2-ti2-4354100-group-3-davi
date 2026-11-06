@@ -199,7 +199,7 @@ formCliente.addEventListener('submit', async (e) => {
       endereco: campos.endereco.value.trim(),
       profissao: campos.profissao.value.trim(),
       email: campos.email.value.trim().toLowerCase(),
-      senha: campos.senha.value || registro?.senha,
+      senha: campos.senha.value || undefined, // vazio na edição = manter a atual (o servidor preserva)
       rendimentos
     };
     if (editando) {
@@ -248,7 +248,7 @@ formAgente.addEventListener('submit', async (e) => {
       tipo: editando ? registro.tipo : tipo.value,
       cnpj: formatCNPJ(cnpj.value),
       email: email.value.trim().toLowerCase(),
-      senha: senha.value || registro?.senha
+      senha: senha.value || undefined
     };
     if (editando) {
       await api.update('agentes', registroId, { id: registroId, ...dados });

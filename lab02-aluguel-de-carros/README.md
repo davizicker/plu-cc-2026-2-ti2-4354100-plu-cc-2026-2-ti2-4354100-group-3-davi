@@ -68,7 +68,7 @@ Locadoras e bancos precisam analisar, aprovar e formalizar aluguéis de veículo
 - 🧮 **Análise financeira:** renda total × valor do aluguel, com parecer obrigatório.
 - 🏦 **Contrato de crédito** opcional com banco, parcela pela Tabela Price.
 - 📄 **Contratos:** execução pelo agente, atualização do proprietário do veículo e consulta.
-- 🛡️ **Regras:** conflito de datas, bloqueio de exclusões com vínculos ativos, escape de HTML contra XSS.
+- 🛡️ **Regras e segurança:** conflito de datas, bloqueio de exclusões com vínculos ativos, recusa de ações sobre pedidos desatualizados, senhas com hash, CSP e escape contra XSS.
 - 📱 **Responsivo** (Bootstrap 5, mobile-first).
 
 ---
@@ -97,7 +97,8 @@ Aplicação **cliente-servidor em camadas**: páginas HTML (apresentação) → 
 Decisões e limitações:
 - Um único processo Node serve o front-end e a API, evitando CORS e simplificando o deploy.
 - Referências entre coleções por `id`; dados repetidos (rendimentos, parecer, crédito) ficam embutidos.
-- **Projeto acadêmico:** JSON Server não possui controle de acesso nem criptografia. Senhas ficam em texto puro no `db.json` e as permissões são aplicadas no front-end. Não use em produção.
+- **Segurança (camada sobre o JSON Server, em `server.js`):** senhas novas são gravadas com hash `scrypt` e nunca retornam pela API; o login é validado no servidor (`POST /api/login`, limite de 10 tentativas/min); cabeçalhos de segurança e CSP; escape de HTML no front-end.
+- **Limitação (projeto acadêmico):** o JSON Server não tem controle de acesso por usuário, então as permissões por perfil são aplicadas no front-end e qualquer pessoa com acesso à URL consegue chamar a API diretamente. As contas de demonstração do `db.json` mantêm senha em texto puro só para facilitar a correção. Não use em produção.
 
 | Casos de Uso | Classes |
 | :---: | :---: |
@@ -159,7 +160,8 @@ O projeto precisa de um servidor Node.js (o JSON Server grava no `db.json`), por
 ```
 lab02-aluguel-de-carros/
 ├── db.json                # Dados (JSON Server)
-├── server.js              # API (/api) + arquivos estáticos
+├── server.js              # API (/api), login seguro e arquivos estáticos
+├── LICENSE
 ├── render.yaml            # Blueprint de deploy (Render)
 ├── docs/
 │   ├── fontes/            # Diagramas PlantUML (.puml)
@@ -202,7 +204,7 @@ API REST (JSON Server):     http://localhost:3000/api/clientes
 ---
 
 ## 🧪 Testes
-Teste ponta a ponta em navegador real (Playwright) cobrindo cadastro e validações, login, criar/modificar/cancelar pedidos, conflito de datas, avaliação, contrato com e sem crédito, troca de proprietário, CRUD de clientes e automóveis, bloqueios de exclusão, rotas protegidas e ausência de erros no console (**44 verificações**).
+Teste ponta a ponta em navegador real (Playwright) cobrindo cadastro e validações, login, criar/modificar/cancelar pedidos, conflito de datas, avaliação, contrato com e sem crédito, troca de proprietário, CRUD de clientes e automóveis, bloqueios de exclusão, rotas protegidas e ausência de erros no console (**52 verificações**, incluindo segurança do servidor).
 
 ```bash
 npm i --no-save playwright && npx playwright install chromium

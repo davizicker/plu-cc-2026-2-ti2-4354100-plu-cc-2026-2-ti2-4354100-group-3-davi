@@ -18,7 +18,7 @@ const server = spawn('node', ['server.js'], {
     await new Promise((r) => setTimeout(r, 200));
   }
   const r = spawnSync('node', [path.join(__dirname, '..', 'tests', 'e2e.cjs')], {
-    stdio: 'inherit', env: { ...process.env, BASE_URL: `http://localhost:${PORT}` }
+    stdio: 'inherit', env: { ...process.env, BASE_URL: `http://localhost:${PORT}`, E2E_DB: tmpDb }
   });
   server.kill();
   process.exit(r.status ?? 1);
