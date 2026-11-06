@@ -1,0 +1,9 @@
+# Blueprint para hospedar no Render (https://render.com) — Plano gratuito.
+services:
+  - type: web
+    name: aluguel-de-carros
+    runtime: node
+    rootDir: lab02-aluguel-de-carros
+    buildCommand: npm install
+    startCommand: npm start
+    plan: free

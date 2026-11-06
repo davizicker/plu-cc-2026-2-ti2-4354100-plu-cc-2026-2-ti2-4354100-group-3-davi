@@ -1,0 +1,110 @@
+@startuml diagrama-classes
+title Diagrama de Classes — Sistema de Aluguel de Carros
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam roundcorner 8
+skinparam ArrowColor #0b5c85
+skinparam backgroundColor white
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor #f4f9fc
+skinparam classBorderColor #0b5c85
+hide empty members
+
+interface Proprietario <<interface>>
+
+class Cliente {
+  - id : int
+  - nome : String
+  - rg : String
+  - cpf : String
+  - endereco : String
+  - profissao : String
+  - email : String
+  - senha : String
+  + rendaMensalTotal() : double
+}
+class Rendimento {
+  - entidadeEmpregadora : String
+  - valor : double
+}
+abstract class Agente {
+  - id : int
+  - nome : String
+  - cnpj : String
+  - email : String
+  - senha : String
+  + avaliarPedido(p, decisao, texto)
+  + modificarPedido(p)
+  + executarContrato(p)
+}
+class Empresa
+class Banco {
+  + concederCredito(p, valor, parcelas, taxa)
+}
+class Automovel {
+  - id : int
+  - matricula : String
+  - ano : int
+  - marca : String
+  - modelo : String
+  - placa : String
+  - diaria : double
+}
+class PedidoAluguel {
+  - id : int
+  - dataInicio : Date
+  - dataFim : Date
+  - observacao : String
+  - status : StatusPedido
+  - criadoEm : DateTime
+  + diarias() : int
+  + valorTotal() : double
+  + modificar()
+  + cancelar()
+}
+class Parecer {
+  - decisao : Positivo|Negativo
+  - texto : String
+  - data : DateTime
+}
+class ContratoAluguel {
+  - id : int
+  - valorTotal : double
+  - propriedade : Agente|Cliente
+  - status : Vigente|Encerrado
+  - assinadoEm : DateTime
+}
+class ContratoCredito {
+  - valorFinanciado : double
+  - parcelas : int
+  - taxaMensal : double
+  - valorParcela : double
+  + calcularParcelaPrice() : double
+}
+enum StatusPedido {
+  EM_ANALISE
+  APROVADO
+  REPROVADO
+  CANCELADO
+  CONTRATADO
+}
+
+Agente <|-- Empresa
+Agente <|-- Banco
+Proprietario <|.. Cliente
+Proprietario <|.. Empresa
+Proprietario <|.. Banco
+
+Cliente "1" *-- "1..3" Rendimento : possui
+Cliente "1" -- "0..*" PedidoAluguel : introduz >
+PedidoAluguel "0..*" -- "1" Automovel : refere-se a >
+Automovel "0..*" -- "1" Proprietario : pertence a >
+PedidoAluguel "1" o-- "0..1" Parecer : recebe >
+Agente "1" -- "0..*" Parecer : emite >
+PedidoAluguel "1" -- "0..1" ContratoAluguel : origina >
+Agente "1" -- "0..*" ContratoAluguel : executa >
+ContratoAluguel "1" o-- "0..1" ContratoCredito : associado a >
+Banco "1" -- "0..*" ContratoCredito : concede >
+PedidoAluguel "0..*" -- "0..1" Banco : solicita crédito a >
+PedidoAluguel ..> StatusPedido
+@enduml

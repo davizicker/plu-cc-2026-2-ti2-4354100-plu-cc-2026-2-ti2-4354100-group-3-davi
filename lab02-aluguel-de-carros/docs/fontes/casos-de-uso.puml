@@ -1,0 +1,58 @@
+@startuml casos-de-uso
+title Diagrama de Casos de Uso — Sistema de Aluguel de Carros
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam roundcorner 8
+skinparam ArrowColor #0b5c85
+skinparam backgroundColor white
+skinparam usecaseBackgroundColor #e6f1f7
+skinparam usecaseBorderColor #0b5c85
+left to right direction
+actor "Visitante" as V
+actor "Cliente" as C
+actor "Agente" as A
+actor "Empresa" as E
+actor "Banco" as B
+A <|-- E
+A <|-- B
+
+rectangle "Sistema de Aluguel de Carros" {
+  usecase "UC01 Cadastrar-se" as UC01
+  usecase "UC02 Autenticar (login)" as UC02
+  usecase "UC03 Manter cliente\n(consultar, alterar, excluir)" as UC03
+  usecase "UC04 Manter automóvel" as UC04
+  usecase "UC05 Criar pedido de aluguel" as UC05
+  usecase "UC06 Consultar pedidos\ne status" as UC06
+  usecase "UC07 Modificar pedido" as UC07
+  usecase "UC08 Cancelar pedido" as UC08
+  usecase "UC09 Avaliar pedido\n(análise financeira)" as UC09
+  usecase "UC10 Executar contrato\nde aluguel" as UC10
+  usecase "UC11 Conceder contrato\nde crédito" as UC11
+  usecase "UC12 Consultar contratos" as UC12
+  usecase "Verificar disponibilidade\ndo automóvel" as UCD
+}
+
+V --> UC01
+C --> UC02
+A --> UC02
+C --> UC03
+A --> UC03
+C --> UC04
+A --> UC04
+C --> UC05
+C --> UC06
+A --> UC06
+C --> UC07
+A --> UC07
+C --> UC08
+A --> UC09
+A --> UC10
+B --> UC11
+C --> UC12
+A --> UC12
+
+UC05 .> UCD : <<include>>
+UC07 .> UCD : <<include>>
+UC11 .> UC10 : <<extend>>
+UC10 .> UC09 : <<include>>
+@enduml

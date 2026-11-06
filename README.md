@@ -1,5 +1,7 @@
 # Portfólio — Davi Furtado de Lacerda Zicker
 
+> 📌 **Laboratório 02 (Sistema de Aluguel de Carros — DIW):** veja a pasta [`lab02-aluguel-de-carros/`](lab02-aluguel-de-carros/README.md).
+
 Site de portfólio profissional do Laboratório 01 (DIW · PUC Minas): bilíngue (PT/EN), responsivo, com tema claro/escuro, timeline de projetos, experiências e formulário de contato funcional.
 
 🔗 **Site publicado:** https://portifolio-pi-neon-36.vercel.app

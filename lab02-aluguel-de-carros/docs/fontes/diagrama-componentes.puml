@@ -1,0 +1,40 @@
+@startuml diagrama-componentes
+title Diagrama de Componentes — Sistema de Aluguel de Carros
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam roundcorner 8
+skinparam ArrowColor #0b5c85
+skinparam backgroundColor white
+skinparam componentBackgroundColor #e6f1f7
+skinparam componentBorderColor #0b5c85
+
+node "Navegador do usuário (Cliente / Agente)" {
+  component "Páginas HTML5\n(index, cadastro, painel, clientes,\nautomoveis, pedidos, contratos)" as HTML
+  component "Bootstrap 5 + Icons\n(CDN)" as BS
+  component "Módulos JavaScript\n(pages/*.js)" as PG
+  component "auth.js" as AUTH
+  component "ui.js / validators.js" as UI
+  component "api.js (Fetch API)" as API
+  database "sessionStorage\n(sessão)" as SS
+}
+
+node "Servidor Node.js (Render / local)" {
+  component "server.js" as SRV
+  component "Servidor estático\n(public/)" as STAT
+  component "JSON Server\n(API REST /api)" as JS
+  database "db.json" as DB
+}
+
+HTML --> BS
+HTML --> PG
+PG --> AUTH
+PG --> UI
+PG --> API
+AUTH --> SS
+AUTH --> API
+API --> JS : "HTTP REST\n(GET/POST/PUT/PATCH/DELETE)"
+HTML <-- STAT : "HTML/CSS/JS"
+SRV *-- STAT
+SRV *-- JS
+JS --> DB
+@enduml

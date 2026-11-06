@@ -1,0 +1,25 @@
+:root {
+  --brand: #0b5c85;
+  --brand-dark: #08425f;
+  --brand-soft: #e6f1f7;
+}
+body { background: #f4f7fa; min-height: 100vh; display: flex; flex-direction: column; }
+main { flex: 1; }
+.navbar-brand i { color: #8fd3f4; }
+.bg-brand { background: linear-gradient(90deg, var(--brand-dark), var(--brand)) !important; }
+.btn-brand { --bs-btn-bg: var(--brand); --bs-btn-border-color: var(--brand); --bs-btn-color: #fff;
+  --bs-btn-hover-bg: var(--brand-dark); --bs-btn-hover-border-color: var(--brand-dark); --bs-btn-hover-color: #fff;
+  --bs-btn-active-bg: var(--brand-dark); --bs-btn-active-border-color: var(--brand-dark); --bs-btn-active-color: #fff; }
+.text-brand { color: var(--brand) !important; }
+.card { border: 0; box-shadow: 0 1px 3px rgba(16, 42, 67, .12); }
+.stat-card .display-6 { font-weight: 700; color: var(--brand); }
+.stat-card i { font-size: 1.8rem; color: var(--brand); opacity: .85; }
+.hero { background: linear-gradient(135deg, var(--brand-dark), var(--brand) 60%, #2f9ac9); color: #fff; }
+.auth-wrap { max-width: 440px; }
+.table > :not(caption) > * > * { vertical-align: middle; }
+.table-actions .btn { --bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; }
+.badge-status { font-weight: 600; }
+.toast-container { z-index: 2000; }
+.required::after { content: " *"; color: #dc3545; }
+footer { font-size: .85rem; }
+@media (max-width: 575.98px) { .table-responsive-stack td { white-space: nowrap; } }

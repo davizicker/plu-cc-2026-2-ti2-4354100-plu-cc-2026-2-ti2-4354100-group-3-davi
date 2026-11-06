@@ -1,0 +1,44 @@
+@startuml diagrama-pacotes
+title Diagrama de Pacotes (Visão Lógica) — Sistema de Aluguel de Carros
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam roundcorner 8
+skinparam ArrowColor #0b5c85
+skinparam backgroundColor white
+skinparam packageBackgroundColor #f4f9fc
+skinparam packageBorderColor #0b5c85
+
+package "Apresentação (public/*.html + css)" as APR {
+  package "Páginas" as PAG
+  package "Estilos Bootstrap 5" as CSS
+}
+package "Lógica de Aplicação (public/js/pages)" as LOG {
+  package "Pedidos e Contratos" as PC
+  package "Clientes e Cadastro" as CC
+  package "Automóveis" as AU
+  package "Painel" as PN
+}
+package "Núcleo Compartilhado (public/js)" as NUC {
+  package "auth (sessão e perfis)" as AUTH
+  package "ui (componentes e formatação)" as UI
+  package "validators (CPF, CNPJ, placa)" as VAL
+}
+package "Acesso a Dados (public/js/api.js)" as DAL {
+  package "api (Fetch API / REST)" as API
+}
+package "Servidor (server.js)" as SRV {
+  package "JSON Server (/api)" as JS
+  package "Arquivos estáticos (/)" as EST
+}
+package "Persistência" as PER {
+  package "db.json" as DB
+}
+
+APR ..> LOG : <<use>>
+LOG ..> NUC : <<use>>
+LOG ..> DAL : <<use>>
+NUC ..> DAL : <<use>>
+DAL ..> SRV : HTTP/JSON
+JS ..> DB : lê/grava
+EST ..> APR : serve
+@enduml

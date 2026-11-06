@@ -1,0 +1,18 @@
+{
+  "name": "sistema-aluguel-de-carros",
+  "version": "1.0.0",
+  "description": "Laboratório 02 (DIW · PUC Minas) — Sistema de Aluguel de Carros com HTML5, CSS3, JavaScript, Bootstrap 5 e JSON Server.",
+  "private": true,
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "reset-db": "node scripts/reset-db.js"
+  },
+  "dependencies": {
+    "json-server": "0.17.4"
+  }
+}

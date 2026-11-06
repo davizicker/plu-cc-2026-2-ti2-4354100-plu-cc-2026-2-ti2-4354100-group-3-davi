@@ -1,0 +1,24 @@
+@startuml estados-pedido
+title Diagrama de Estados — Pedido de Aluguel
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam roundcorner 8
+skinparam ArrowColor #0b5c85
+skinparam backgroundColor white
+skinparam stateBackgroundColor #e6f1f7
+skinparam stateBorderColor #0b5c85
+
+[*] --> EmAnalise : cliente cria o pedido
+EmAnalise --> EmAnalise : cliente ou agente modifica
+EmAnalise --> Aprovado : agente emite parecer positivo
+EmAnalise --> Reprovado : agente emite parecer negativo
+EmAnalise --> Cancelado : cliente cancela
+Aprovado --> Cancelado : cliente cancela
+Aprovado --> EmAnalise : modificação invalida o parecer
+Aprovado --> Contratado : agente executa o contrato
+Reprovado --> [*]
+Cancelado --> [*]
+Contratado --> [*]
+
+state "Em análise" as EmAnalise
+@enduml

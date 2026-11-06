@@ -1,0 +1,132 @@
+{
+  "clientes": [
+    {
+      "id": 1,
+      "nome": "Maria Souza Almeida",
+      "rg": "MG-12.345.678",
+      "cpf": "529.982.247-25",
+      "endereco": "Rua das Acácias, 120 - Bairro Funcionários, Belo Horizonte/MG",
+      "profissao": "Engenheira Civil",
+      "email": "maria@exemplo.com",
+      "senha": "123456",
+      "rendimentos": [
+        { "entidade": "Construtora Alfa Ltda", "valor": 9500 },
+        { "entidade": "Consultoria Independente", "valor": 2500 }
+      ]
+    },
+    {
+      "id": 2,
+      "nome": "Carlos Eduardo Pereira",
+      "rg": "MG-98.765.432",
+      "cpf": "111.444.777-35",
+      "endereco": "Av. Afonso Pena, 1500, ap. 802 - Centro, Belo Horizonte/MG",
+      "profissao": "Professor",
+      "email": "carlos@exemplo.com",
+      "senha": "123456",
+      "rendimentos": [
+        { "entidade": "Colégio Horizonte", "valor": 4200 }
+      ]
+    }
+  ],
+  "agentes": [
+    {
+      "id": 1,
+      "nome": "LocaMinas Aluguel de Veículos",
+      "tipo": "empresa",
+      "cnpj": "11.222.333/0001-81",
+      "email": "empresa@exemplo.com",
+      "senha": "123456"
+    },
+    {
+      "id": 2,
+      "nome": "Banco Horizonte",
+      "tipo": "banco",
+      "cnpj": "45.997.418/0001-53",
+      "email": "banco@exemplo.com",
+      "senha": "123456"
+    },
+    {
+      "id": 3,
+      "nome": "Banco Minas Crédito",
+      "tipo": "banco",
+      "cnpj": "00.360.305/0001-04",
+      "email": "minascredito@exemplo.com",
+      "senha": "123456"
+    }
+  ],
+  "automoveis": [
+    { "id": 1, "matricula": "100200301", "ano": 2023, "marca": "Fiat", "modelo": "Argo Drive 1.0", "placa": "RIO2A19", "diaria": 140, "proprietarioTipo": "empresa", "proprietarioId": 1 },
+    { "id": 2, "matricula": "100200302", "ano": 2024, "marca": "Volkswagen", "modelo": "T-Cross 200 TSI", "placa": "QWE4B56", "diaria": 230, "proprietarioTipo": "empresa", "proprietarioId": 1 },
+    { "id": 3, "matricula": "100200303", "ano": 2022, "marca": "Chevrolet", "modelo": "Onix LT", "placa": "BRA3C77", "diaria": 120, "proprietarioTipo": "banco", "proprietarioId": 2 },
+    { "id": 4, "matricula": "100200304", "ano": 2024, "marca": "Toyota", "modelo": "Corolla XEi 2.0", "placa": "GHI7J88", "diaria": 310, "proprietarioTipo": "banco", "proprietarioId": 3 },
+    { "id": 5, "matricula": "100200305", "ano": 2021, "marca": "Honda", "modelo": "HR-V EX", "placa": "KLM5N21", "diaria": 260, "proprietarioTipo": "cliente", "proprietarioId": 2 }
+  ],
+  "pedidos": [
+    {
+      "id": 1,
+      "clienteId": 1,
+      "automovelId": 2,
+      "dataInicio": "2026-12-10",
+      "dataFim": "2026-12-17",
+      "observacao": "Viagem de fim de ano.",
+      "credito": { "solicitado": true, "bancoId": 2 },
+      "status": "Em análise",
+      "parecer": null,
+      "contratoId": null,
+      "criadoEm": "2026-11-01T14:20:00.000Z"
+    },
+    {
+      "id": 2,
+      "clienteId": 2,
+      "automovelId": 1,
+      "dataInicio": "2026-11-20",
+      "dataFim": "2026-11-23",
+      "observacao": "",
+      "credito": { "solicitado": false, "bancoId": null },
+      "status": "Aprovado",
+      "parecer": {
+        "agenteId": 1,
+        "agenteNome": "LocaMinas Aluguel de Veículos",
+        "decisao": "Positivo",
+        "texto": "Renda compatível com o valor do aluguel.",
+        "data": "2026-11-02T09:00:00.000Z"
+      },
+      "contratoId": null,
+      "criadoEm": "2026-11-01T18:05:00.000Z"
+    },
+    {
+      "id": 3,
+      "clienteId": 1,
+      "automovelId": 3,
+      "dataInicio": "2026-10-05",
+      "dataFim": "2026-10-12",
+      "observacao": "Primeiro aluguel.",
+      "credito": { "solicitado": true, "bancoId": 2 },
+      "status": "Contratado",
+      "parecer": {
+        "agenteId": 2,
+        "agenteNome": "Banco Horizonte",
+        "decisao": "Positivo",
+        "texto": "Perfil aprovado para crédito.",
+        "data": "2026-10-01T12:00:00.000Z"
+      },
+      "contratoId": 1,
+      "criadoEm": "2026-09-30T10:00:00.000Z"
+    }
+  ],
+  "contratos": [
+    {
+      "id": 1,
+      "pedidoId": 3,
+      "agenteId": 2,
+      "agenteNome": "Banco Horizonte",
+      "clienteId": 1,
+      "automovelId": 3,
+      "propriedade": "agente",
+      "valorTotal": 960,
+      "credito": { "bancoId": 2, "valorFinanciado": 960, "parcelas": 4, "taxaMensal": 1.9, "valorParcela": 255.43 },
+      "status": "Vigente",
+      "assinadoEm": "2026-10-02T15:30:00.000Z"
+    }
+  ]
+}

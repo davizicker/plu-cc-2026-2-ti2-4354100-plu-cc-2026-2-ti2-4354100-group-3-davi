@@ -1,0 +1,39 @@
+@startuml sequencia-pedido-contrato
+title Sequência — Do pedido à execução do contrato
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam roundcorner 8
+skinparam ArrowColor #0b5c85
+skinparam backgroundColor white
+skinparam sequenceLifeLineBorderColor #0b5c85
+skinparam sequenceParticipantBorderColor #0b5c85
+skinparam sequenceParticipantBackgroundColor #e6f1f7
+autonumber
+actor Cliente
+actor Agente
+participant "Front-end\n(HTML/JS/Bootstrap)" as FE
+participant "JSON Server\n(/api)" as API
+database "db.json" as DB
+
+Cliente -> FE : preenche pedido (automóvel, período, crédito?)
+FE -> API : GET /pedidos (checar disponibilidade)
+API --> FE : pedidos existentes
+FE -> API : POST /pedidos {status: "Em análise"}
+API -> DB : grava
+FE --> Cliente : pedido criado
+
+Agente -> FE : abre "Avaliar pedido"
+FE -> API : GET /clientes, /automoveis
+API --> FE : dados financeiros
+Agente -> FE : parecer positivo + texto
+FE -> API : PATCH /pedidos/{id} {status: "Aprovado", parecer}
+
+Agente -> FE : "Executar contrato"
+FE -> API : POST /contratos {propriedade, crédito?}
+FE -> API : PATCH /automoveis/{id} (novo proprietário)
+FE -> API : PATCH /pedidos/{id} {status: "Contratado", contratoId}
+FE --> Agente : contrato executado
+Cliente -> FE : consulta status
+FE -> API : GET /pedidos?clienteId=...
+API --> FE : status "Contratado"
+@enduml
