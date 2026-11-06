@@ -49,9 +49,9 @@ async function carrega() {
       ? recentes.map((p) => {
           const c = carro(p.automovelId);
           const total = (c?.diaria ?? 0) * diarias(p.dataInicio, p.dataFim);
-          return `<tr><td>${p.id}</td>${agente ? `<td>${esc(nomeCliente(p.clienteId))}</td>` : ''}
-            <td>${c ? `${esc(c.marca)} ${esc(c.modelo)} <span class="text-muted small">(${esc(c.placa)})</span>` : '—'}</td>
-            <td>${fmtData(p.dataInicio)} a ${fmtData(p.dataFim)}</td><td>${brl(total)}</td><td>${badgeStatus(p.status)}</td></tr>`;
+          return `<tr><td data-label="#">${p.id}</td>${agente ? `<td data-label="Cliente">${esc(nomeCliente(p.clienteId))}</td>` : ''}
+            <td data-label="Automóvel">${c ? `${esc(c.marca)} ${esc(c.modelo)} <span class="text-muted small">(${esc(c.placa)})</span>` : '—'}</td>
+            <td data-label="Período">${fmtData(p.dataInicio)} a ${fmtData(p.dataFim)}</td><td data-label="Total">${brl(total)}</td><td data-label="Status">${badgeStatus(p.status)}</td></tr>`;
         }).join('')
       : estadoVazio('Nenhum pedido ainda.', agente ? 6 : 5);
   } catch (err) {

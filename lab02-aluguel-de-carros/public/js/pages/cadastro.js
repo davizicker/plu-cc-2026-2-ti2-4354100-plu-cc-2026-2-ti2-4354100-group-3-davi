@@ -1,5 +1,5 @@
 import { api } from '../api.js';
-import { emailEmUso, getSessao } from '../auth.js';
+import { atualizaSessao, emailEmUso, getSessao } from '../auth.js';
 import { esc, iniciaPagina, mostraErro, toast } from '../ui.js';
 import { formatCNPJ, formatCPF, isCNPJ, isCPF, isEmail, onlyDigits } from '../validators.js';
 
@@ -253,7 +253,7 @@ formAgente.addEventListener('submit', async (e) => {
     if (editando) {
       await api.update('agentes', registroId, { id: registroId, ...dados });
       // Mantém a sessão coerente com o novo nome/tipo.
-      sessionStorage.setItem('aluguel.sessao', JSON.stringify({ ...sessao, nome: dados.nome, tipo: dados.tipo }));
+      atualizaSessao({ nome: dados.nome, tipo: dados.tipo });
       toast('Dados atualizados com sucesso.');
       setTimeout(() => (location.href = 'clientes.html'), 600);
     } else {

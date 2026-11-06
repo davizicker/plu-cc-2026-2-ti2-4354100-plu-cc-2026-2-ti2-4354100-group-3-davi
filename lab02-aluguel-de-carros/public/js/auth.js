@@ -12,6 +12,10 @@ export function getSessao() {
   }
 }
 
+export function atualizaSessao(dados) {
+  sessionStorage.setItem(CHAVE, JSON.stringify({ ...getSessao(), ...dados }));
+}
+
 export const isAgente = (s = getSessao()) => s?.perfil === 'agente';
 export const isCliente = (s = getSessao()) => s?.perfil === 'cliente';
 

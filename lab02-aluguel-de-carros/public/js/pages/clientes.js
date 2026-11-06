@@ -32,7 +32,7 @@ function renderLista() {
     <a class="btn btn-brand" href="cadastro.html"><i class="bi bi-plus-lg me-1"></i>Novo cliente</a>`;
   $('conteudo').innerHTML = `
     <div class="card mb-3"><div class="card-body py-2"><input type="search" id="busca" class="form-control" placeholder="Buscar por nome, CPF, profissão ou e-mail…" aria-label="Buscar clientes"></div></div>
-    <div class="card"><div class="table-responsive"><table class="table table-hover align-middle mb-0">
+    <div class="card"><div class="table-responsive"><table class="table table-hover align-middle mb-0 table-stack">
       <thead class="table-light"><tr><th>Nome</th><th>CPF</th><th>Profissão</th><th class="text-end">Renda mensal</th><th>E-mail</th><th class="text-end">Ações</th></tr></thead>
       <tbody id="lista"></tbody></table></div></div>`;
   $('busca').addEventListener('input', preencheLista);
@@ -45,8 +45,8 @@ function preencheLista() {
   const filtrados = clientes.filter((c) => !q || [c.nome, c.cpf, c.profissao, c.email].some((v) => String(v).toLowerCase().includes(q)));
   $('lista').innerHTML = filtrados.length
     ? filtrados.map((c) => `<tr>
-        <td><strong>${esc(c.nome)}</strong><div class="small text-muted">${esc(c.endereco)}</div></td>
-        <td>${esc(c.cpf)}</td><td>${esc(c.profissao)}</td><td class="text-end">${brl(rendaTotal(c))}</td><td>${esc(c.email)}</td>
+        <td data-label="Nome"><span><strong>${esc(c.nome)}</strong><div class="small text-muted">${esc(c.endereco)}</div></span></td>
+        <td data-label="CPF">${esc(c.cpf)}</td><td data-label="Profissão">${esc(c.profissao)}</td><td data-label="Renda mensal" class="text-end">${brl(rendaTotal(c))}</td><td data-label="E-mail">${esc(c.email)}</td>
         <td class="text-end table-actions text-nowrap">
           <button class="btn btn-outline-secondary" data-acao="ver" data-id="${c.id}" title="Consultar"><i class="bi bi-eye"></i></button>
           <a class="btn btn-outline-primary" href="cadastro.html?id=${c.id}" title="Editar"><i class="bi bi-pencil"></i></a>

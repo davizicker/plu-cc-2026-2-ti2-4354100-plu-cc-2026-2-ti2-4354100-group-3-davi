@@ -23,3 +23,16 @@ main { flex: 1; }
 .required::after { content: " *"; color: #dc3545; }
 footer { font-size: .85rem; }
 @media (max-width: 575.98px) { .table-responsive-stack td { white-space: nowrap; } }
+
+/* Tabelas viram cartões no celular (os botões de ação ficam sempre visíveis) */
+@media (max-width: 767.98px) {
+  .table-stack thead { display: none; }
+  .table-stack, .table-stack tbody, .table-stack tr, .table-stack td { display: block; width: 100%; }
+  .table-stack tr { border-bottom: 1px solid #dee2e6; padding: .6rem .9rem; }
+  .table-stack td { display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+    border: 0; padding: .2rem 0 !important; text-align: right; }
+  .table-stack td::before { content: attr(data-label); font-weight: 600; color: #6c757d; text-align: left; flex-shrink: 0; }
+  .table-stack td[data-label=""]::before, .table-stack td:not([data-label])::before { content: none; }
+  .table-stack td[colspan] { justify-content: center; }
+  .table-stack td.table-actions { justify-content: flex-end; padding-top: .5rem !important; }
+}

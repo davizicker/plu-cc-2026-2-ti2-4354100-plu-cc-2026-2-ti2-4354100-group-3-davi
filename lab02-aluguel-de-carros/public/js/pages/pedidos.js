@@ -43,6 +43,17 @@ const conflito = (automovelId, inicio, fim, ignorarId = null) =>
       periodosSeSobrepoem(p, { dataInicio: inicio, dataFim: fim })
   );
 
+/** Busca o pedido no servidor e confirma que ainda está em um dos status esperados (evita agir sobre dados velhos). */
+async function pedidoAtualizado(id, statusPermitidos) {
+  const atual = await api.get('pedidos', id);
+  if (!statusPermitidos.includes(atual.status)) {
+    toast(`O pedido #${id} mudou para "${atual.status}" e não aceita mais esta ação. A lista foi atualizada.`, 'warning');
+    await carrega();
+    return null;
+  }
+  return atual;
+}
+
 // ---- Carregamento e listagem -----------------------------------------------------------------
 async function carrega() {
   try {
@@ -95,11 +106,11 @@ function linha(p) {
   const a = carro(p.automovelId);
   const credito = p.credito?.solicitado ? `<i class="bi bi-bank me-1"></i>${esc(nomeAgente(p.credito.bancoId))}` : '<span class="text-muted">—</span>';
   return `<tr>
-    <td>${p.id}</td>
-    ${agente ? `<td>${esc(cliente(p.clienteId)?.nome ?? `Cliente #${p.clienteId}`)}</td>` : ''}
-    <td>${esc(descCarro(a))}</td>
-    <td class="text-nowrap">${fmtData(p.dataInicio)} a ${fmtData(p.dataFim)}<div class="small text-muted">${diarias(p.dataInicio, p.dataFim)} diária(s)</div></td>
-    <td class="text-end">${brl(totalPedido(p))}</td><td class="small">${credito}</td><td>${badgeStatus(p.status)}</td>
+    <td data-label="#">${p.id}</td>
+    ${agente ? `<td data-label="Cliente">${esc(cliente(p.clienteId)?.nome ?? `Cliente #${p.clienteId}`)}</td>` : ''}
+    <td data-label="Automóvel">${esc(descCarro(a))}</td>
+    <td data-label="Período" class="text-nowrap"><span>${fmtData(p.dataInicio)} a ${fmtData(p.dataFim)}<div class="small text-muted">${diarias(p.dataInicio, p.dataFim)} diária(s)</div></span></td>
+    <td data-label="Total" class="text-end">${brl(totalPedido(p))}</td><td data-label="Crédito" class="small">${credito}</td><td data-label="Status">${badgeStatus(p.status)}</td>
     <td class="text-end table-actions text-nowrap">${acoes(p)}</td></tr>`;
 }
 
@@ -107,7 +118,8 @@ function linha(p) {
 function opcoesAutomoveis(selecionadoId) {
   $('p-auto').innerHTML =
     '<option value="">Selecione…</option>' +
-    automoveis.map((a) => `<option value="${a.id}" ${a.id === selecionadoId ? 'selected' : ''}>${esc(descCarro(a))} — ${brl(a.diaria)}/dia · ${rotuloProprietario[a.proprietarioTipo]}</option>`).join('');
+    automoveis.filter((a) => agente || !(a.proprietarioTipo === 'cliente' && a.proprietarioId === sessao.id))
+      .map((a) => `<option value="${a.id}" ${a.id === selecionadoId ? 'selected' : ''}>${esc(descCarro(a))} — ${brl(a.diaria)}/dia · ${rotuloProprietario[a.proprietarioTipo]}</option>`).join('');
 }
 function opcoesBancos(selecionadoId) {
   const bancos = agentes.filter((g) => g.tipo === 'banco');
@@ -182,7 +194,9 @@ $('form-pedido').addEventListener('submit', async (e) => {
   try {
     if (pedidoEmEdicao) {
       // Qualquer modificação invalida o parecer anterior: o pedido volta para análise.
-      await api.update('pedidos', pedidoEmEdicao.id, { ...pedidoEmEdicao, ...base, status: 'Em análise', parecer: null });
+      const atual = await pedidoAtualizado(pedidoEmEdicao.id, agente ? ['Em análise', 'Aprovado'] : ['Em análise']);
+      if (!atual) return getModal('modal-pedido').hide();
+      await api.update('pedidos', atual.id, { ...atual, ...base, status: 'Em análise', parecer: null });
       toast(`Pedido #${pedidoEmEdicao.id} modificado e reenviado para análise.`);
     } else {
       await api.create('pedidos', {
@@ -226,6 +240,7 @@ async function cancelar(p) {
   const ok = await confirmar(`Cancelar o pedido #${p.id}? Esta ação não pode ser desfeita.`, { titulo: 'Cancelar pedido', ok: 'Cancelar pedido', perigo: true });
   if (!ok) return;
   try {
+    if (!(await pedidoAtualizado(p.id, ['Em análise', 'Aprovado']))) return;
     await api.patch('pedidos', p.id, { status: 'Cancelado' });
     toast(`Pedido #${p.id} cancelado.`);
     await carrega();
@@ -274,6 +289,7 @@ async function decide(decisao) {
   }
   const positivo = decisao === 'Positivo';
   try {
+    if (!(await pedidoAtualizado(pedidoAvaliado.id, ['Em análise']))) return getModal('modal-avaliacao').hide();
     await api.patch('pedidos', pedidoAvaliado.id, {
       status: positivo ? 'Aprovado' : 'Reprovado',
       parecer: { agenteId: sessao.id, agenteNome: sessao.nome, decisao, texto, data: new Date().toISOString() }
@@ -336,6 +352,7 @@ $('form-contrato').addEventListener('submit', async (e) => {
   const botao = $('btn-executar');
   botao.disabled = true;
   try {
+    if (!(await pedidoAtualizado(p.id, ['Aprovado']))) return getModal('modal-contrato').hide();
     const contrato = await api.create('contratos', {
       pedidoId: p.id, agenteId: sessao.id, agenteNome: sessao.nome, clienteId: p.clienteId, automovelId: p.automovelId,
       propriedade, valorTotal: total, credito, status: 'Vigente', assinadoEm: new Date().toISOString()

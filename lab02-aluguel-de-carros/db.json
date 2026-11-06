@@ -124,7 +124,7 @@
       "automovelId": 3,
       "propriedade": "agente",
       "valorTotal": 960,
-      "credito": { "bancoId": 2, "valorFinanciado": 960, "parcelas": 4, "taxaMensal": 1.9, "valorParcela": 255.43 },
+      "credito": { "bancoId": 2, "valorFinanciado": 960, "parcelas": 4, "taxaMensal": 1.9, "valorParcela": 251.51 },
       "status": "Vigente",
       "assinadoEm": "2026-10-02T15:30:00.000Z"
     }

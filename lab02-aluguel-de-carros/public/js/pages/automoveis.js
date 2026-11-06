@@ -42,10 +42,10 @@ function render() {
     ? lista.map((a) => {
         const reservas = pedidos.filter((p) => p.automovelId === a.id && STATUS_ATIVOS.includes(p.status)).length;
         return `<tr>
-          <td><code>${esc(a.placa)}</code></td><td><strong>${esc(a.marca)}</strong> ${esc(a.modelo)}</td><td>${esc(a.ano)}</td><td>${esc(a.matricula)}</td>
-          <td class="text-end">${brl(a.diaria)}</td>
-          <td>${esc(nomeProprietario(a))} <span class="badge text-bg-light border">${rotuloProprietario[a.proprietarioTipo]}</span></td>
-          <td class="text-center">${reservas}</td>
+          <td data-label="Placa"><code>${esc(a.placa)}</code></td><td data-label="Veículo"><span><strong>${esc(a.marca)}</strong> ${esc(a.modelo)}</span></td><td data-label="Ano">${esc(a.ano)}</td><td data-label="Matrícula">${esc(a.matricula)}</td>
+          <td data-label="Diária" class="text-end">${brl(a.diaria)}</td>
+          <td data-label="Proprietário"><span>${esc(nomeProprietario(a))} <span class="badge text-bg-light border">${rotuloProprietario[a.proprietarioTipo]}</span></span></td>
+          <td data-label="Reservas ativas" class="text-center">${reservas}</td>
           <td class="text-end table-actions text-nowrap">${podeEditar(a)
             ? `<button class="btn btn-outline-primary" data-acao="editar" data-id="${a.id}" title="Editar"><i class="bi bi-pencil"></i></button>
                <button class="btn btn-outline-danger" data-acao="excluir" data-id="${a.id}" title="Excluir"><i class="bi bi-trash"></i></button>`
@@ -141,6 +141,8 @@ $('form-auto').addEventListener('submit', async (e) => {
     matricula: f.matricula.value.trim(), ano, marca: f.marca.value.trim(), modelo: f.modelo.value.trim(),
     placa, diaria: Number(f.diaria.value), proprietarioTipo, proprietarioId
   };
+  const botao = $('form-auto').querySelector('[type=submit]');
+  botao.disabled = true;
   try {
     if (editandoId) await api.update('automoveis', editandoId, { id: editandoId, ...dados });
     else await api.create('automoveis', dados);
@@ -149,6 +151,8 @@ $('form-auto').addEventListener('submit', async (e) => {
     await carrega();
   } catch (err) {
     mostraErro($('modal-alerta'), err.message);
+  } finally {
+    botao.disabled = false;
   }
 });
 

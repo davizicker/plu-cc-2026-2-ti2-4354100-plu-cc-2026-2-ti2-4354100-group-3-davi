@@ -167,6 +167,8 @@ lab02-aluguel-de-carros/
 │   ├── screenshots/       # Capturas de tela
 │   ├── historias-de-usuario.md
 │   └── modelagem.md
+├── scripts/               # reset-db e runner dos testes
+├── tests/e2e.cjs          # Teste ponta a ponta (Playwright)
 └── public/
     ├── *.html             # index, cadastro, painel, clientes, automoveis, pedidos, contratos
     ├── config.js          # URL da API
@@ -188,7 +190,7 @@ lab02-aluguel-de-carros/
 | **Clientes (visão do agente)** | **Automóveis** |
 | <img src="docs/screenshots/clientes-agente.png" width="420" alt="Clientes"> | <img src="docs/screenshots/automoveis.png" width="420" alt="Automóveis"> |
 
-📱 **Mobile:** <img src="docs/screenshots/mobile-login.png" width="180" alt="Login mobile">
+📱 **Mobile** (tabelas viram cartões): <img src="docs/screenshots/mobile-login.png" width="180" alt="Login mobile"> <img src="docs/screenshots/mobile-pedidos.png" width="180" alt="Pedidos no celular">
 
 ### 💻 Saída no terminal
 ```text
@@ -200,7 +202,12 @@ API REST (JSON Server):     http://localhost:3000/api/clientes
 ---
 
 ## 🧪 Testes
-O fluxo completo foi verificado com testes ponta a ponta em navegador (Playwright): cadastro e validações, login, criação/modificação/cancelamento de pedidos, conflito de datas, avaliação, execução de contrato com e sem crédito, atualização de propriedade, CRUD de clientes e automóveis, bloqueios de exclusão, rotas protegidas e ausência de erros no console. **44/44 verificações passaram.**
+Teste ponta a ponta em navegador real (Playwright) cobrindo cadastro e validações, login, criar/modificar/cancelar pedidos, conflito de datas, avaliação, contrato com e sem crédito, troca de proprietário, CRUD de clientes e automóveis, bloqueios de exclusão, rotas protegidas e ausência de erros no console (**44 verificações**).
+
+```bash
+npm i --no-save playwright && npx playwright install chromium
+npm run test:e2e     # usa uma cópia temporária do db.json (o original não é alterado)
+```
 
 ---
 

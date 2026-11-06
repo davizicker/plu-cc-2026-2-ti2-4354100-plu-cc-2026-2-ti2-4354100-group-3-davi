@@ -22,10 +22,10 @@ async function carrega() {
     clientes = agente ? await api.list('clientes') : [await api.get('clientes', sessao.id)];
     const lista = contratos.filter((c) => agente || c.clienteId === sessao.id).sort((a, b) => b.id - a.id);
     $('lista').innerHTML = lista.length
-      ? lista.map((c) => `<tr><td>${c.id}</td><td>#${c.pedidoId}</td>${agente ? `<td>${esc(cliente(c.clienteId)?.nome ?? `Cliente #${c.clienteId}`)}</td>` : ''}
-          <td>${esc(descCarro(carro(c.automovelId)))}</td><td class="text-end">${brl(c.valorTotal)}</td>
-          <td class="small">${c.credito ? `${esc(nomeAgente(c.credito.bancoId))}<div class="text-muted">${c.credito.parcelas}× ${brl(c.credito.valorParcela)}</div>` : '<span class="text-muted">—</span>'}</td>
-          <td><span class="badge text-bg-${c.status === 'Vigente' ? 'success' : 'secondary'}">${esc(c.status)}</span></td>
+      ? lista.map((c) => `<tr><td data-label="#">${c.id}</td><td data-label="Pedido">#${c.pedidoId}</td>${agente ? `<td data-label="Cliente">${esc(cliente(c.clienteId)?.nome ?? `Cliente #${c.clienteId}`)}</td>` : ''}
+          <td data-label="Automóvel">${esc(descCarro(carro(c.automovelId)))}</td><td data-label="Valor" class="text-end">${brl(c.valorTotal)}</td>
+          <td data-label="Crédito" class="small">${c.credito ? `${esc(nomeAgente(c.credito.bancoId))}<div class="text-muted">${c.credito.parcelas}× ${brl(c.credito.valorParcela)}</div>` : '<span class="text-muted">—</span>'}</td>
+          <td data-label="Status"><span class="badge text-bg-${c.status === 'Vigente' ? 'success' : 'secondary'}">${esc(c.status)}</span></td>
           <td class="text-end table-actions"><button class="btn btn-outline-secondary" data-id="${c.id}" title="Detalhes"><i class="bi bi-eye"></i></button></td></tr>`).join('')
       : estadoVazio('Nenhum contrato por enquanto.', agente ? 8 : 7);
   } catch (err) {
